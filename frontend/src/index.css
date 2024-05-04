@@ -1,0 +1,79 @@
+:root {
+    --dark-color: #1E2C46;
+    --light-color: #F0EFFF;
+    --cream-color: #FFF3E5;
+    --purple-color: #7C66EF;
+    --light-purple-color: #cbccff;
+    --dark-purple-color: #49488E;
+    --orange-color: #FF9600;
+    --brown-color: #DA8034;
+    --light-blue-color: #EAF2FF;
+    --navy-blue-color: #1E2C46;
+    --reddish-color: #FC3C13;
+}
+
+@font-face {
+    font-family: "Light";
+    src: local("ProximaNova-Light"),
+            url("./fonts/ProximaNova-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Regular";
+    src: local("ProximaNova-Regular"),
+            url("./fonts/ProximaNova-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Bold";
+    src: local("ProximaNova-Bold"),
+            url("./fonts/ProximaNova-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Extrabld";
+    src: local("ProximaNova-Extrabld"),
+            url("./fonts/ProximaNova-Extrabld.ttf") format("truetype");
+}
+
+*, body {
+    font-family: "Regular";
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-container {
+    display: none;
+    background-color: var(--light-blue-color);
+}
+
+@media screen and (max-width: 800px) {
+    .nav-container {
+        display: none;
+    }
+    .mobile-container {
+        display: flex;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 1rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--purple-color);
+    border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-purple-color);
+}
