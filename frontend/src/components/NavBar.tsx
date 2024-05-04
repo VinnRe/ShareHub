@@ -4,6 +4,7 @@ import "./styles/NavBar.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { IoLogOut } from "react-icons/io5";
 import { useLogout } from "../hooks/useLogout";
+import LogoText from '../assets/logo_text.png'
 
 interface ButtonProps {
   active: boolean;
@@ -53,7 +54,7 @@ const NavBar = () => {
   return (
     <nav className="nav-container">
       <div className="left-nav-container">
-        <img src="./src/assets/text-logo.png" alt="" />
+        <img src={LogoText} alt="" className="logo-text"/>
         <StyledLink
           to="/home"
           active={location.pathname.startsWith("/home")}
