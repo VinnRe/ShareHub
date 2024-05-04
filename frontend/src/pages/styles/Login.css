@@ -1,8 +1,7 @@
 .login {
     display: flex;
     flex-direction: row;
-    background-image: url('../../assets/LoginSignup/bg.png');
-    background-size: cover;
+    background-image: url('../../assets/logo_big.png');
     background-position: right;
     background-repeat: no-repeat;
 }
@@ -18,7 +17,7 @@
 }
 
 .welcome-container img {
-    display: none;
+   display: none;
 }
 
 .login-container h1 {

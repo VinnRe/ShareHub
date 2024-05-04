@@ -1,8 +1,8 @@
 .signup {
     display: flex;
     flex-direction: row;
-    background-image: url('../../assets/LoginSignup/bg.png');
-    background-size: cover;
+    background-image: url('../../assets/logo_big.png');
+    /* background-size: cover; */
     background-position: right;
     background-repeat: no-repeat;
 }

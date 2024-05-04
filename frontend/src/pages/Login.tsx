@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useLogin } from "../hooks/useLogin";
 import "./styles/Login.css";
+import LogoText from '../assets/logo_text.png'
 
 const Login = () => {
   const [emailOrUsername, setEmailOrUsername] = useState("");
@@ -18,7 +19,7 @@ const Login = () => {
       <div className="image"></div>
       <div className="login-container">
         <div className="welcome-container">
-          <img src="./src/assets/magister-logo.png" alt="" />
+          <img src={LogoText} alt="asdasd" />
           <h1 className="wc1">Hello,</h1>
           <div className="wc-h1">
             <h1 className="wc2">Welcome</h1>
