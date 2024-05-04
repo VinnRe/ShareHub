@@ -6,8 +6,6 @@ import { GiClothes } from "react-icons/gi";
 import logo from '../assets/logo_big.png'
 import Item from '../components/Item';
 
-const purpleColor = "#7C66EF"
-
 const Home = () => {
     return (
         <div className='home-page'>
