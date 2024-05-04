@@ -1,0 +1,170 @@
+.account-settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("../../assets/bg_2.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 1rem 5rem;
+    /* height: 85vh; */
+}
+
+.account-settings .as-save-btn {
+    position: absolute;
+    color: white;
+    background-color: var(--orange-color);
+    font-size: 1rem;
+    border-radius: 3rem;
+    width: 13vw;
+    height: 6vh;
+    margin-top: 1rem;
+    border: 0;
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    top: 83vh;
+    left: 69vw;
+}
+
+.account-settings .as-save-btn:hover {
+    background-color: var(--brown-color);
+}
+
+.as-top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20vw;
+    /* background-color: var(--light-blue-color); */
+    width: 100%;
+    height: 45vh;
+    margin-top: -8vh;
+    margin-bottom: -4vh;
+}
+
+.as-top-header h1 {
+    font-family: "Extrabld";
+    font-size: 2.3rem;
+    color: var(--navy-blue-color);
+}
+
+.as-top-header a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 10vw;
+    font-family: "Extrabld";
+    font-size: 1.3rem;
+    color: var(--reddish-color);
+    text-align: center;
+    border: 3px solid var(--reddish-color);
+    border-radius: 2rem;
+    background-color: white;
+}
+
+.as-top-header a:hover {
+    color: white;
+    background-color: var(--reddish-color);
+    cursor: pointer;
+}
+
+.as-container {
+    display: flex;
+    flex-direction: row;
+    width: 60vw;
+    height: 65vh;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 2rem;
+    box-shadow: 0 0.3rem 1.3rem rgba(0, 0, 0, 0.2);
+    margin-top: -15vh;
+    padding: 2rem 5rem 4.5rem 5rem;
+    margin-bottom: 1rem;
+}
+
+.as-container .as-container-left {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 30vw;
+}
+
+.as-container .as-container-left h1 {
+    font-family: "Bold";
+    font-size: 2.5rem;
+    color: var(--navy-blue-color);
+}
+
+.as-container .as-container-left p {
+    font-family: "Bold";
+    font-size: 1rem;
+    margin-bottom: 4vh;
+    color: var(--navy-blue-color);
+}
+
+.as-container .as-container-left .as-name-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.as-container .as-container-left .as-name-container input {
+    width: 13vw;
+    height: 6vh;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: var(--light-color);
+    font-size: 1rem;
+    padding-left: 1vw;
+    margin-bottom: 2rem;
+}
+
+.as-container .as-container-left .as-emailpass-container {
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+}
+
+.as-container .as-container-left .as-emailpass-container a {
+    margin-top: -4vh;
+    margin-right: 0.3rem;
+    text-decoration: none;
+    font-family: "Bold";
+    color: var(--navy-blue-color);
+}
+
+.as-container .as-container-left .as-emailpass-container .as-a-change {
+    margin-bottom: 1rem;
+}
+
+.as-container .as-container-left .as-emailpass-container .as-a-change:hover {
+    color: var(--orange-color);
+    cursor: pointer;
+}
+
+
+.as-container .as-container-left .as-emailpass-container input {
+    width: 29vw;
+    height: 6vh;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: var(--light-color);
+    font-size: 1rem;
+    padding-left: 1vw;
+    margin-bottom: 2rem;
+}
+
+.as-container .as-container-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 20vw;
+}
+
+.default-acc-pic {
+    color: var(--orange-color);
+}
