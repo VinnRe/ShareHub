@@ -1,19 +1,20 @@
 import './styles/Home.css'
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const Home = () => {
     return (
         <div>
             {/* HERO SECTION */}
-            <section id="hero">
+            <section className="hero">
                 <div className="hero-texts">
                     <h4>Browse with ease</h4>
                     <h2>Great deals provided</h2>
                     <h1>Vast options to choose from</h1>
                     <p>Find a great deal for you today!</p>
-                    {/* <button id="browse-deals">Browse Deals!</button> */}
+                    {/* <button className="browse-deals">Browse Deals!</button> */}
                     <div className="search-container">
-                        <input id="search-bar" type="text" placeholder="Search..." />
-                        <button id="search-button">search</button>
+                        <input className="search-bar" type="text" placeholder="Search..." />
+                        <FaMagnifyingGlass className='search-button'/>
                     </div>
                 </div>
                 <div className="hero-background">
@@ -22,7 +23,7 @@ const Home = () => {
             </section>
 
             {/* CONTENT SECTION */}
-            <section id="content">
+            <section className="content">
                 <div className="categories">
                     <div className="categories-header">
                         <h2>Categories</h2>
@@ -30,23 +31,23 @@ const Home = () => {
                     <div className="category-sections">
                         <div className="category">
                             <a href=""><img src="/assets/categories/electronics_512.png" alt="Electronics" /></a>
-                            <p id="Electronics">Electronics</p>
+                            <p className="Electronics">Electronics</p>
                         </div>
                         <div className="category">
                             <a href=""><img src="/assets/categories/vehicles_512.png" alt="Vehicles" /></a>
-                            <p id="Vehicles">Vehicles</p>
+                            <p className="Vehicles">Vehicles</p>
                         </div>
                         <div className="category">
                             <a href=""><img src="/assets/categories/all_categories.png" alt="All" /></a>
-                            <p id="all-categories">All Categories</p>
+                            <p className="all-categories">All Categories</p>
                         </div>
                         <div className="category">
                             <a href=""><img src="/assets/categories/tools_and_equip_512.png" alt="ToolsAndEquipments" /></a>
-                            <p id="Tools-and-Equipment">Tools and Equipments</p>
+                            <p className="Tools-and-Equipment">Tools and Equipments</p>
                         </div>
                         <div className="category">
                             <a href=""><img src="/assets/categories/properties_512.png" alt="properties" /></a>
-                            <p id="Properties">Properties</p>
+                            <p className="Properties">Properties</p>
                         </div>
                     </div>
                 </div>
@@ -65,4 +66,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Home;
