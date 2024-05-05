@@ -34,7 +34,7 @@ export const useLogin = () => {
             localStorage.setItem('user', JSON.stringify(json))
 
             dispatch({type: 'LOGIN', payload: json})
-            navigate("/job-board")
+            navigate("/home")
             setIsLoading(false)
         }
     }
