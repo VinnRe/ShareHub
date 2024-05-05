@@ -21,7 +21,7 @@ export const useAccountUpdate = () => {
         console.log(user.token)
 
       const response = await fetch('/api/user/update/profile', {
-        method: 'POST', 
+        method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`
