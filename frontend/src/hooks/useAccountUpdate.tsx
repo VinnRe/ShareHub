@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext'; 
 
-
-
 export const useAccountUpdate = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,13 +12,15 @@ export const useAccountUpdate = () => {
 
       const payload = {
         ...updatedInfo,
-        userId: user.data._id 
+        user: {
+          _id: user.data._id
+      }
       };
 
       console.log("Request payload:", JSON.stringify(payload))
         console.log(user.token)
 
-      const response = await fetch('/api/account/update/profile', {
+      const response = await fetch('/api/users/update/profile', {
         method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
