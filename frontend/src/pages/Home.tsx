@@ -5,8 +5,42 @@ import { MdDevices, MdOutlineDensitySmall } from "react-icons/md";
 import { GiClothes } from "react-icons/gi";
 import logo from '../assets/logo_big.png'
 import Item from '../components/Item';
+import { useState } from 'react';
+
+interface ListedProps {
+    _id: string;
+    title: string;
+    details: string;
+    media: File;
+    user: {
+        _id: string;
+    }
+}
 
 const Home = () => {
+    const [search, setSearch] = useState('')
+    const [listed, setListed] = useState<any>(null)
+
+    const printSearch = () => {
+        console.log(search)
+    }
+
+    const fetchListed = async () => {
+        const response = await fetch("/api/list/fetch/approved");
+        const json = await response.json();
+    
+        console.log(json);
+        // if (response.ok) {
+        //   const listingData = json.map((item: any) => {
+        //     return {
+        //       ...item.resourceData,
+        //       ownerName: item.ownerInfo.name,
+        //     };
+        //   });
+        //   setListed(listingData);
+        // }
+      }
+
     return (
         <div className='home-page'>
             {/* HERO SECTION */}
@@ -18,8 +52,8 @@ const Home = () => {
                     <p>Share More, Own Less!</p>
                     {/* <button className="browse-deals">Browse Deals!</button> */}
                     <div className="search-container">
-                        <input className="search-bar" type="text" placeholder="Search..." />
-                        <FaMagnifyingGlass className='search-button'/>
+                        <input className="search-bar" type="text" placeholder="Search..." value={search} onChange={(e) => {setSearch(e.target.value)}}/>
+                        <FaMagnifyingGlass className='search-button' onClick={fetchListed}/>
                     </div>
                 </div>
                 <div className="hero-background">
