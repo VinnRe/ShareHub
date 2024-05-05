@@ -29,7 +29,12 @@ exports.createList = catchAsync(async (req, res) => {
 exports.fetchUnapproved = catchAsync(async (req, res) => {
   try {
       const unapprovedLists = await List.find({ approved: false }).sort({ createdAt: -1 });
-      res.status(200).json(unapprovedLists);
+      const result = [];
+      for (let i = 0; i < unapprovedLists.length; ++i) {
+        const owner = await User.findById(unapprovedLists[i].creator, { _id: 0, password: 0, email: 0 });
+        result.push({ listData: unapprovedLists[i], ownerInfo: owner });
+    }
+      res.status(200).json(result);
   } catch (err) {
       res.status(500).json({ error: "Couldn't fetch unapproved lists" });
   }
