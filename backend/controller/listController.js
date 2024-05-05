@@ -26,20 +26,38 @@ exports.createList = catchAsync(async (req, res) => {
 });
 
 
-exports.fetchAll = catchAsync(async (req, res) => {
-    try {
-      const allList = await List.find({}).sort({ createdAt: -1 });
-      const result = [];
-  
-      for (let i = 0; i < allList.length; ++i) {
-        const owner = await User.findById(allList[i].creator, { _id: 0, password: 0, email: 0 });
-        result.push({ listData: allList[i], ownerInfo: owner });
+exports.fetchUnapproved = catchAsync(async (req, res) => {
+  try {
+      const unapprovedLists = await List.find({ approved: false }).sort({ createdAt: -1 });
+      res.status(200).json(unapprovedLists);
+  } catch (err) {
+      res.status(500).json({ error: "Couldn't fetch unapproved lists" });
+  }
+});
+
+exports.fetchApproved = catchAsync(async (req, res) => {
+  try {
+      const approvedLists = await List.find({ approved: true }).sort({ createdAt: -1 });
+      res.status(200).json(approvedLists);
+  } catch (err) {
+      res.status(500).json({ error: "Couldn't fetch approved lists" });
+  }
+});
+
+exports.approveList = catchAsync(async (req, res) => {
+  const { listId } = req.body;
+  try {
+      const list = await List.findById(listId);
+      if (!list) {
+          return res.status(404).json({ error: "List not found" });
       }
-      res.status(200).json(result);
-    } catch (err) {
-      res.status(500).json("Couldn't find list!! Please refresh and try again!!");
-    }
-  });
+      list.approved = true;
+      await list.save();
+      res.status(200).json({ message: "List approved successfully" });
+  } catch (err) {
+      res.status(500).json({ error: "Couldn't approve list" });
+  }
+});
 
 exports.fetchOptions = catchAsync(async (req, res) => {
     const { options, name } = req.body;
@@ -71,7 +89,7 @@ exports.fetchOptions = catchAsync(async (req, res) => {
   exports.filterByTags = catchAsync(async (req, res) => {
     const { tags } = req.body;
     try {
-        const filteredResources = await Resource.find({ tags: { $in: tags } }).sort({ createdAt: -1 });
+        const filteredResources = await Resource.find({ tags: { $in: tags }, approved: true }).sort({ createdAt: -1 });
 
         const result = [];
         for (let i = 0; i < filteredResources.length; ++i) {
@@ -85,23 +103,23 @@ exports.fetchOptions = catchAsync(async (req, res) => {
 });
 
 exports.searchList = catchAsync(async (req, res) => {
-  const { searchTerm } = req.body;
-  try {
-      let searchedList = await Listfind({ title: { $regex: new RegExp(searchTerm, 'i') } }).sort({ createdAt: -1 });
-      if (searchedList.length === 0) {
-          const user = await User.findOne({ name: { $regex: new RegExp(searchTerm, 'i') } });
-          const userId = user._id;
-          searchedList = await Listfind({ creator: userId }).sort({ createdAt: -1 });
-      }
+    const { searchTerm } = req.body;
+    try {
+        let searchedList = await List.find({ title: { $regex: new RegExp(searchTerm, 'i') }, approved: true }).sort({ createdAt: -1 });
+        if (searchedList.length === 0) {
+            const user = await User.findOne({ name: { $regex: new RegExp(searchTerm, 'i') } });
+            const userId = user._id;
+            searchedList = await List.find({ creator: userId, approved: true }).sort({ createdAt: -1 });
+        }
 
-      const result = [];
-      for (let i = 0; i < searchedList.length; ++i) {
-          const owner = await User.findById(searchedList[i].creator, { _id: 0, password: 0, email: 0 });
-          result.push({ Listata: searchedList[i], ownerInfo: owner });
-      }
-      res.status(200).json(result);
-  } catch (err) {
-      console.error(err);
-      res.status(500).json("Error occurred while searching for listing. Please try again!");
-  }
+        const result = [];
+        for (let i = 0; i < searchedList.length; ++i) {
+            const owner = await User.findById(searchedList[i].creator, { _id: 0, password: 0, email: 0 });
+            result.push({ Listata: searchedList[i], ownerInfo: owner });
+        }
+        res.status(200).json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json("Error occurred while searching for listing. Please try again!");
+    }
 });

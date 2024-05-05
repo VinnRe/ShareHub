@@ -35,6 +35,11 @@ const listSchema = new mongoose.Schema({
     default: [],
   },
 
+  approved: {
+    type: Boolean,
+    default: false,
+  },
+
 });
 
 const List = mongoose.model("List", listSchema);
