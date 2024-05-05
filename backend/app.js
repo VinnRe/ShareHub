@@ -1,7 +1,7 @@
 const express = require("express");
 const userRoutes = require("./route/userRoutes");
 const listRoutes = require("./route/listRoutes");
-//const pdfRoutes = require("./routes/pdfRoutes");
+const imageRoutes = require("./route/imageRoutes");
 const bodyParser = require("body-parser");
 const multer = require("multer")
 var morgan = require("morgan");
@@ -17,13 +17,9 @@ app.use(bodyParser.json());
 
 module.exports = app;
 
-//app.use("/api/post", postRoutes);
 app.use("/api/user", userRoutes);
-//app.use("/api/job",  jobRoutes);
-//app.use("/api/course", courseRoutes);
-//app.use("/api/enroll", enrollRoutes)
 app.use("/api/list", listRoutes);
-//app.use("/api/pdf", pdfRoutes)
+app.use("/api/image", imageRoutes)
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
