@@ -9,6 +9,7 @@
     width: 300px;
     height: 400px;
     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.4);
+    overflow-y: scroll;
 }
 
 .item-container button {
@@ -32,7 +33,7 @@
     margin-right: 10px;
 }
 
-.buy-btn {
+.get-btn {
     margin-bottom: 10px;
 }
 
@@ -62,5 +63,15 @@
 }
 
 .item-details {
+    height: 100vh;
     overflow-y: scroll;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    height: 35vh;
+    text-align: center;
+    margin: 0;
 }

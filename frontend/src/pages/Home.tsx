@@ -5,41 +5,83 @@ import { MdDevices, MdOutlineDensitySmall } from "react-icons/md";
 import { GiClothes } from "react-icons/gi";
 import logo from '../assets/logo_big.png'
 import Item from '../components/Item';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useListedSearch } from '../hooks/useListedSearch';
 
 interface ListedProps {
     _id: string;
     title: string;
     details: string;
     media: File;
-    user: {
-        _id: string;
-    }
+    creator: string;
+    createdAt: Date;
+    tags: string[];
+    ownerName: string;
 }
 
 const Home = () => {
     const [search, setSearch] = useState('')
     const [listed, setListed] = useState<any>(null)
+    const { searchListed, searchResults, isLoadingS } = useListedSearch()
 
-    const printSearch = () => {
-        console.log(search)
-    }
+    const filterResources = async (filterValue: any) => {
+        const filtered = filterValue;
+    
+        console.log(filtered);
+        if (filtered) {
+          const listedData = filtered.map((item: any) => {
+            return {
+              ...item.listedData,
+              ownerName: item.ownerInfo.name,
+            };
+          });
+          setListed(listedData);
+          return listedData;
+        } else {
+          setListed(null);
+          return null;
+        }
+      };
 
     const fetchListed = async () => {
-        const response = await fetch("/api/list/fetch/approved");
-        const json = await response.json();
+        const response = await fetch("/api/list/fetch/approved")
+        const json = await response.json()
     
-        console.log(json);
-        // if (response.ok) {
-        //   const listingData = json.map((item: any) => {
-        //     return {
-        //       ...item.resourceData,
-        //       ownerName: item.ownerInfo.name,
-        //     };
-        //   });
-        //   setListed(listingData);
-        // }
-      }
+        console.log(json)
+        if (response.ok) {
+          const listingData = json.map((item: any) => {
+            console.log(item)
+            return {
+                ...item,
+                ownerName: item.ownerInfo.name
+            }
+          })
+          setListed(listingData)
+          console.log(listingData)
+        }
+    }
+
+    const handleSearch = async () => {
+        !isLoadingS
+        try {
+            if (search === "") {
+              fetchListed();
+            } else {
+              await searchListed(search);
+              const searched = await searchResults;
+              filterResources(searched);
+            }
+          } catch (error) {
+            console.error("Error searching for resources:", error);
+          } finally {
+            isLoadingS;
+          }
+    }
+
+    useEffect(() => {
+        fetchListed()
+        return
+    }, [])
 
     return (
         <div className='home-page'>
@@ -53,7 +95,7 @@ const Home = () => {
                     {/* <button className="browse-deals">Browse Deals!</button> */}
                     <div className="search-container">
                         <input className="search-bar" type="text" placeholder="Search..." value={search} onChange={(e) => {setSearch(e.target.value)}}/>
-                        <FaMagnifyingGlass className='search-button' onClick={fetchListed}/>
+                        <FaMagnifyingGlass className='search-button' onClick={handleSearch}/>
                     </div>
                 </div>
                 <div className="hero-background">
@@ -97,8 +139,19 @@ const Home = () => {
                         <h2>For You</h2>
                     </div>
                     <div className="listings">
-                        {/* Insert the existing listings */}
-                        <Item />
+                        {listed &&
+                            listed.map((list: ListedProps) => (
+                            <Item
+                                key={list._id}
+                                title={list.title}
+                                creator={list.ownerName}
+                                createdAt={new Date(list.createdAt)}
+                                details={list.details}
+                                media={list.media}
+                                tags={list.tags}
+                            />
+                            ))}
+                        {!listed && <p>Loading resources...</p>}
                     </div>
                 </div>
             </section>
