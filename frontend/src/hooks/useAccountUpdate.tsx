@@ -8,7 +8,7 @@ export const useAccountUpdate = () => {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthContext(); 
 
-  const updateAccount = async (updatedInfo: { name?: string; email?: string }) => {
+  const updateAccount = async (updatedInfo: { name?: string; email?: string; password?: string; }) => {
     setIsLoading(true);
     setError(null);
 
