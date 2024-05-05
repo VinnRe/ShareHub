@@ -3,13 +3,61 @@ import "./styles/AccountSettings.css"
 import { IoIosLogOut } from "react-icons/io";
 import { useLogout } from "../hooks/useLogout";
 import { MdAccountCircle } from "react-icons/md";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useAccountUpdate } from "../hooks/useAccountUpdate";
 
+interface Payload {
+    name: string;
+    email: string
+    password: string
+}
 
 const AccountSettings = () => {
+    const [userName, setUserName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [emailEditable, setEmailEditable] = useState(false)
+    const [passwordEditable, setPasswordEditable] = useState(false)
+    const [emailChange, setEmailChange] = useState('CHANGE')
+    const [passwordChange, setPasswordChange] = useState('CHANGE')
+    const { user } = useAuthContext()
+    const { updateAccount } = useAccountUpdate()
+
     const { logout } = useLogout()
 
     const handleLogout = () => {
         logout()
+    }
+
+    const handleSubmit = async () => {
+        try {
+            if (password === confirmPassword) {
+                await updateAccount({ name: userName, email: email, password: password })
+            } else {
+                console.log("Passwords don't match!")
+            }
+        } catch (error) {
+            console.error("Error updating account:", error);
+        }
+    }
+
+    const toggleEmailEdit = () => {
+        if (emailChange === "CHANGE") {
+            setEmailChange("CANCEL")
+        } else {
+            setEmailChange("CHANGE")
+        }
+        setEmailEditable(!emailEditable)
+    }
+    
+    const togglePasswordEdit = () => {
+        if (passwordChange === "CHANGE") {
+            setPasswordChange("CANCEL")
+        } else {
+            setPasswordChange("CHANGE")
+        }
+        setPasswordEditable(!passwordEditable)
     }
 
     return (
@@ -25,42 +73,49 @@ const AccountSettings = () => {
                     <div className="as-name-container">
                         <input
                             className="fn-name-container"
-                            placeholder="First Name" // Change this to GET the First Name 
+                            placeholder="Username"
                             type="text" 
+                            value={userName}
+                            onChange={(e) => {setUserName(e.target.value)}}
                             />
-                        <input
-                            className="ln-name-container"
-                            placeholder="Last Name" // Change this to GET the Last Name 
-                            type="text" 
-                        />
                     </div>
                     <h1>Account Information</h1>
                     <p>Change your email and password</p>
                     <div className="as-emailpass-container">
                         <input
-                            placeholder="Email" // Change this to GET the Email 
+                            className={`as-email ${emailEditable ? '' : 'read-only'}`}
+                            placeholder="Email"
                             type="text" 
+                            value={email}
+                            onChange={(e) => {setEmail(e.target.value)}}
+                            readOnly={!emailEditable}
                         />
-                        <a href="" className="as-a-change">CHANGE</a>
+                        <a className="as-a-change" onClick={toggleEmailEdit}>{emailChange}</a>
                         <input
+                            className={`as-password ${passwordEditable ? '' : 'read-only'}`}
                             placeholder="Password"
                             type="password" 
+                            value={password}
+                            onChange={(e) => {setPassword(e.target.value)}}
+                            readOnly={!passwordEditable}
                         />
                         <input
+                            className={`as-confirm-password ${passwordEditable ? '' : 'read-only'}`}
                             placeholder="Confirm Password"
                             type="password" 
+                            value={confirmPassword}
+                            onChange={(e) => {setConfirmPassword(e.target.value)}}
+                            readOnly={!passwordEditable}
                         />
-                        <a href="" className="as-a-change">CHANGE</a>
+                        <a className="as-a-change" onClick={togglePasswordEdit}>{passwordChange}</a>
                     </div>
                 </main>
                 <main className="as-container-right">
                     <MdAccountCircle fontSize="15rem" className="default-acc-pic"/>
-                    {/* <h3>{FullName}</h3>
-                    <p>{username}</p> */}
-                    <h3>TEST NAME</h3>
-                    <p>TEST USERNAME</p>
+                    <h3>{user.data.name}</h3>
+                    <p>{user.data.email}</p>
                 </main>
-                <button className="as-save-btn">Save Changes</button>
+                <button className="as-save-btn" onClick={handleSubmit}>Save Changes</button>
             </div>
         </section>
     )

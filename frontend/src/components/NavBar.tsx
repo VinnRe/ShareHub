@@ -3,8 +3,10 @@ import styled from "styled-components";
 import "./styles/NavBar.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { IoLogOut } from "react-icons/io5";
+import { MdAccountCircle } from "react-icons/md";
 import { useLogout } from "../hooks/useLogout";
 import LogoText from '../assets/logo_text.png'
+import { useNavigate } from "react-router-dom";
 
 interface ButtonProps {
   active: boolean;
@@ -19,9 +21,14 @@ const NavBar = () => {
   const location = useLocation();
   const { user } = useAuthContext();
   const { logout } = useLogout()
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     logout()
+  }
+
+  const handleSwitchPage = () => {
+    navigate('/account-settings')
   }
 
   const renderRightNavButtons = () => {
@@ -33,6 +40,7 @@ const NavBar = () => {
           {user && (
             <>
               <span className="nav-user">{user.data.email}</span>
+              <button className="button-user" onClick={handleSwitchPage}><MdAccountCircle /></button>
               <button className="button-user" onClick={handleLogout}><IoLogOut style={{ strokeWidth: '1.3rem' }}/></button>
             </>
           )}
