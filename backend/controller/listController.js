@@ -38,7 +38,12 @@ exports.fetchUnapproved = catchAsync(async (req, res) => {
 exports.fetchApproved = catchAsync(async (req, res) => {
   try {
       const approvedLists = await List.find({ approved: true }).sort({ createdAt: -1 });
-      res.status(200).json(approvedLists);
+      const result = [];
+      for (let i = 0; i < approvedLists.length; ++i) {
+        const owner = await User.findById(approvedLists[i].creator, { _id: 0, password: 0, email: 0 });
+        result.push({ listData: approvedLists[i], ownerInfo: owner });
+    }
+      res.status(200).json(result);
   } catch (err) {
       res.status(500).json({ error: "Couldn't fetch approved lists" });
   }
@@ -89,12 +94,12 @@ exports.fetchOptions = catchAsync(async (req, res) => {
   exports.filterByTags = catchAsync(async (req, res) => {
     const { tags } = req.body;
     try {
-        const filteredResources = await Resource.find({ tags: { $in: tags }, approved: true }).sort({ createdAt: -1 });
+        const filteredResources = await List.find({ tags: { $in: tags }, approved: true }).sort({ createdAt: -1 });
 
         const result = [];
         for (let i = 0; i < filteredResources.length; ++i) {
             const owner = await User.findById(filteredResources[i].creator, { _id: 0, password: 0, email: 0 });
-            result.push({ resourceData: filteredResources[i], ownerInfo: owner });
+            result.push({ listData: filteredResources[i], ownerInfo: owner });
         }
         res.status(200).json(result);
     } catch (err) {
@@ -115,7 +120,7 @@ exports.searchList = catchAsync(async (req, res) => {
         const result = [];
         for (let i = 0; i < searchedList.length; ++i) {
             const owner = await User.findById(searchedList[i].creator, { _id: 0, password: 0, email: 0 });
-            result.push({ Listata: searchedList[i], ownerInfo: owner });
+            result.push({ listData: searchedList[i], ownerInfo: owner });
         }
         res.status(200).json(result);
     } catch (err) {
