@@ -95,27 +95,32 @@ exports.logout = catchAsync(async (req, res) => {
 
 
 exports.updateProfile = catchAsync(async (req, res) => {
-    const { displayName, password, gender, about, githubLink, linkedInLink, technicalSkills, photo, user } = req.body;
+    const { name, password, email } = req.body;
   
-    try{
-      const _user = await User.findById(user._id);
-  
-      _user.displayName = displayName;
-      if(password.length >= 8)
-        _user.password = await hashPassword(password);
-      _user.gender = gender;
-      _user.about = about;
-      _user.githubLink = githubLink;
-      _user.linkedInLink = linkedInLink;
-      _user.technicalSkills = technicalSkills;
-      _user.photo = photo;
-      
-      _user.save();
-      createSendToken(_user, 200, res, '9999 years');
-    }catch(err){
-  
+    try {
+        const userId = req.user._id;
+
+        const user = await User.findById(userId);
+
+        if (name) {
+            user.name = name;
+        }
+        if (password && password.length >= 4) {
+            user.password = await hashPassword(password);
+        }
+        if (email) {
+            user.email = email;
+        }
+
+        await user.save();
+
+        createSendToken(user, 200, res, '9999 years');
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-  });
+});
+
 
 exports.protect = catchAsync(async (req, res, next) => {
     const { authorization } = req.headers;
