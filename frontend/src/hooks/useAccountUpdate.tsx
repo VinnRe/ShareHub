@@ -20,7 +20,7 @@ export const useAccountUpdate = () => {
       console.log("Request payload:", JSON.stringify(payload))
         console.log(user.token)
 
-      const response = await fetch('/api/users/update/profile', {
+      const response = await fetch('/api/user/update/profile', {
         method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
