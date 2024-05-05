@@ -31,7 +31,7 @@ const Home = () => {
         if (filtered) {
           const listedData = filtered.map((item: any) => {
             return {
-              ...item.listedData,
+              ...item.listData,
               ownerName: item.ownerInfo.name,
             };
           });
@@ -52,7 +52,7 @@ const Home = () => {
           const listingData = json.map((item: any) => {
             console.log(item)
             return {
-                ...item,
+                ...item.listData,
                 ownerName: item.ownerInfo.name
             }
           })
