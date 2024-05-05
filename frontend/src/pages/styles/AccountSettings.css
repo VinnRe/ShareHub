@@ -110,7 +110,7 @@
 }
 
 .as-container .as-container-left .as-name-container input {
-    width: 13vw;
+    width: 29vw;
     height: 6vh;
     border-radius: 0.5rem;
     border: none;
@@ -167,4 +167,13 @@
 
 .default-acc-pic {
     color: var(--orange-color);
+}
+
+.as-emailpass-container input.read-only {
+    color: white;
+    background-color: var(--brown-color) !important;
+}
+
+.as-emailpass-container input.read-only::placeholder {
+    color: white;
 }
