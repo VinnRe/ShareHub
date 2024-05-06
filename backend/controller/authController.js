@@ -157,3 +157,21 @@ exports.protect = catchAsync(async (req, res, next) => {
         }
     }
 });
+
+exports.fetchData = catchAsync(async(req,res,next) => {
+    try {
+        const user = await User.findById(req.user._id);
+    
+        const { name, email, displayName } = user;
+    
+
+        res.status(200).json({
+          name,
+          email,
+          displayName,
+        });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+})
