@@ -39,7 +39,7 @@ const NavBar = () => {
         <>
           {user && (
             <>
-              <span className="nav-user">{user.data.email}</span>
+              <span className="nav-user">{user.data.name}</span>
               <button className="button-user" onClick={handleSwitchPage}><MdAccountCircle /></button>
               <button className="button-user" onClick={handleLogout}><IoLogOut style={{ strokeWidth: '1.3rem' }}/></button>
             </>
