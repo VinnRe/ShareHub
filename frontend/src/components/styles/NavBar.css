@@ -19,7 +19,7 @@
 
 .button-user {
     margin-right: 30px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     background-color: transparent;
     border: none;
 }
@@ -38,6 +38,11 @@
 .left-nav-container a {
     text-decoration: none;
     padding: 25px;
+}
+
+.right-nav-container {
+    display: flex;
+    align-items: center;
 }
 
 .right-nav-container a {
