@@ -35,7 +35,7 @@ const Item: React.FC<ItemProps> = ({ title, details, media, creator, createdAt, 
                 <p className="item-createdAt">{createdAtString}</p>
                 <p className="item-tags">{tags}</p>
             </div>
-            <button className='get-btn'>Get</button>
+            <button className='get-btn'>Borrow</button>
         </div>
     )
 }
