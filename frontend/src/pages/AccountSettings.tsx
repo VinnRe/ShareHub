@@ -53,13 +53,15 @@ const AccountSettings = () => {
             } else {
                 console.log("Passwords don't match!");
             }
+            setEmail('')
+            setUserName('')
+            setPassword('')
+            setConfirmPassword('')
         } catch (error) {
             console.error("Error updating account:", error);
         }
     }
     
-    
-
     const toggleEmailEdit = () => {
         if (emailChange === "CHANGE") {
             setEmailChange("CANCEL")
