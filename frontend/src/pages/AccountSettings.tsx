@@ -1,30 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/AccountSettings.css"
 import { IoIosLogOut } from "react-icons/io";
 import { useLogout } from "../hooks/useLogout";
 import { MdAccountCircle } from "react-icons/md";
-import { useAuthContext } from "../hooks/useAuthContext";
 import { useAccountUpdate } from "../hooks/useAccountUpdate";
-
-interface Payload {
-    name: string;
-    email: string
-    password: string
-}
 
 const AccountSettings = () => {
     const [userName, setUserName] = useState('')
     const [email, setEmail] = useState('')
+    const [displayUserName, setDisplayUserName] = useState('')
+    const [displayEmail, setDisplayEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [emailEditable, setEmailEditable] = useState(false)
     const [passwordEditable, setPasswordEditable] = useState(false)
     const [emailChange, setEmailChange] = useState('CHANGE')
     const [passwordChange, setPasswordChange] = useState('CHANGE')
-    const { user } = useAuthContext()
     const { updateAccount } = useAccountUpdate()
 
     const { logout } = useLogout()
+
+    useEffect(() => {
+        const storedUserDataString = localStorage.getItem("user");
+        if (storedUserDataString) {
+            const storedUserData = JSON.parse(storedUserDataString);
+            setDisplayUserName(storedUserData.data.name);
+            setDisplayEmail(storedUserData.data.email);
+        }
+    }, []);
 
     const handleLogout = () => {
         logout()
@@ -112,8 +115,8 @@ const AccountSettings = () => {
                 </main>
                 <main className="as-container-right">
                     <MdAccountCircle fontSize="15rem" className="default-acc-pic"/>
-                    <h3>{user.data.name}</h3>
-                    <p>{user.data.email}</p>
+                    <h3>{displayUserName}</h3>
+                    <p>{displayEmail}</p>
                 </main>
                 <button className="as-save-btn" onClick={handleSubmit}>Save Changes</button>
             </div>
