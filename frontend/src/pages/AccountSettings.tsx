@@ -36,14 +36,29 @@ const AccountSettings = () => {
     const handleSubmit = async () => {
         try {
             if (password === confirmPassword) {
-                await updateAccount({ name: userName, email: email, password: password })
+                const dataToUpdate: { name?: string; email?: string } = {};
+                if (userName !== displayUserName) {
+                    dataToUpdate.name = userName;
+                }
+                if (email !== displayEmail) {
+                    dataToUpdate.email = email;
+                }
+                await updateAccount(dataToUpdate);
+                if (dataToUpdate.name) {
+                    setDisplayUserName(dataToUpdate.name);
+                }
+                if (dataToUpdate.email) {
+                    setDisplayEmail(dataToUpdate.email);
+                }
             } else {
-                console.log("Passwords don't match!")
+                console.log("Passwords don't match!");
             }
         } catch (error) {
             console.error("Error updating account:", error);
         }
     }
+    
+    
 
     const toggleEmailEdit = () => {
         if (emailChange === "CHANGE") {
