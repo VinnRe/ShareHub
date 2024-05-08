@@ -1,7 +1,9 @@
 import React from 'react';
 import './styles/Item.css'
+import { useAuthContext } from '../hooks/useAuthContext';
 
 interface ItemProps {
+    itemID: string
     title: string;
     details: string;
     media: File;
@@ -10,9 +12,43 @@ interface ItemProps {
     tags: string[];
 }
 
-const Item: React.FC<ItemProps> = ({ title, details, media, creator, createdAt, tags }) => {
+const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, createdAt, tags }) => {
 
     const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
+    const { user } = useAuthContext()
+
+    const handleDelete = async () => {
+        try {
+            const storedUserDataString = localStorage.getItem("user");
+            if (!storedUserDataString) {
+                console.error("No user data found in localStorage");
+                return;
+            }
+            
+            const storedUserData = JSON.parse(storedUserDataString);
+            const token = storedUserData.token;
+    
+            const response = await fetch("/api/list/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ listId: itemID })
+            })
+    
+            if (response.ok) {
+                // Add Success popup
+                console.log("Successfully approved item: ", response)
+            } else {
+                // add ERROR
+                console.error("Failed to approve item: ", response)
+            }
+        } catch (error) {
+            
+            console.error("Failed to approve item: ", error)
+        }
+    }
 
     return (
         <div className="item-container">
@@ -36,6 +72,9 @@ const Item: React.FC<ItemProps> = ({ title, details, media, creator, createdAt, 
                 <p className="item-tags">{tags}</p>
             </div>
             <button className='get-btn'>Borrow</button>
+            {user && user.data.role == "admin" && (
+                <button className="remove-btn" onClick={handleDelete}>Remove</button>
+            )}
         </div>
     )
 }
