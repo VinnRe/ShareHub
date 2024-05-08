@@ -1,17 +1,32 @@
 import { useState, useEffect } from 'react';
 import './styles/Share.css'
 import { useCreate } from '../hooks/useCreateList';
+import { useFileUpload } from "../hooks/useFileUpload";
+
 
 const Share = () => {
     const [category, setCategory] = useState('Appliances')
     const [name, setName] = useState('')
     const [details, setDetails] = useState('')
     const [media, setMedia] = useState<any>('TEST')
+    const [selectedFile, setSelectedFile] = useState<File | null>(null)
+
     const { createList, isLoading } = useCreate()
+    const { uploadFile} = useFileUpload()
+
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setMedia("test.jpeg")
+        
+
+        if(selectedFile)
+            {
+                console.log(selectedFile)
+                await uploadFile(selectedFile)
+            }
+
+        
         await createList(category, name, details, media)
     }
 
@@ -24,7 +39,14 @@ const Share = () => {
                     <div className="form-group form-group-container">
                         <div className="form-group form-group-left">
                             <label htmlFor="item-images">Insert Picture</label><br />
-                            <input type="file" className="item-images" name="item-image[]" multiple accept="image/*" />
+                            <input type="file" className="item-images" name="item-image[]" multiple accept="image/*"
+                                onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    setSelectedFile(file)
+                                    setMedia(file.name)
+                                }
+                            }} />
                             <div className="image-preview"></div>
                         </div>
                         <div className="form-group form-group-right">
