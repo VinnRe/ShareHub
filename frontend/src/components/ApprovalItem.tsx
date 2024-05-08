@@ -1,25 +1,105 @@
 import './styles/ApprovalItem.css'
 
-const ApprovalItem = () => {
+interface ItemProps {
+    itemID: string;
+    title: string;
+    details: string;
+    media: File;
+    creator: string;
+    createdAt: Date;
+    tags: string[];
+}
+
+const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, creator, createdAt, tags }) => {
+    const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
+
+    const handleApprove = async () => {
+        try {
+            const storedUserDataString = localStorage.getItem("user");
+            if (!storedUserDataString) {
+                console.error("No user data found in localStorage");
+                return;
+            }
+                
+            const storedUserData = JSON.parse(storedUserDataString);
+            const token = storedUserData.token;
+
+            const response = await fetch("/api/list/approve", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ listId: itemID })
+            })
+    
+            if (response.ok) {
+                // Add Success popup
+                console.log("Successfully approved item: ", response)
+            } else {
+                // add ERROR
+                console.error("Failed to approve item: ", response)
+            }
+        } catch (error) {
+
+            console.error("Failed to approve item: ", error)
+        }
+    }
+
+    const handleReject = async () => {
+        try {
+            const storedUserDataString = localStorage.getItem("user");
+            if (!storedUserDataString) {
+                console.error("No user data found in localStorage");
+                return;
+            }
+            
+            const storedUserData = JSON.parse(storedUserDataString);
+            const token = storedUserData.token;
+    
+            const response = await fetch("/api/list/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ listId: itemID })
+            })
+    
+            if (response.ok) {
+                // Add Success popup
+                console.log("Successfully approved item: ", response)
+            } else {
+                // add ERROR
+                console.error("Failed to approve item: ", response)
+            }
+        } catch (error) {
+            
+            console.error("Failed to approve item: ", error)
+        }
+    }
+
     return (
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
-                    {/* {listingImages(listing.images)} */}
+                    {/* PUT IMAGE/S HERE */}
                 </div>
             </div>
             <div className="btn-container">
                 <button className="prev-btn">&lt;</button>
                 <button className="next-btn">&gt;</button>
             </div>
-            {/* <h3>{listing.itemName}</h3>
-            <p>₱ {listing.itemPrice}</p>
-            <p className="item-details">{listing.itemDescription}</p> */}
-            <h3>TEST ITEM</h3>
-            <p className="item-details">TEST DESCRIPTION AKJSDHKAJSHDJASHDKJASHJKAHSDJKASH KJASHKJ AHSJKD HASJK HAJKSH DKJASHDK JAHSJK HASJKHDJK ASHDJKAHS</p>
-            <div className="ar-btns">
-                <button className='approve'>Approve</button>
-                <button className='reject'>Reject</button>
+            <div className="item-info">
+                <h3>{title}</h3>
+                <p className="item-details">{details}</p>
+                <p className="item-creator">{creator}</p>
+                <p className="item-createdAt">{createdAtString}</p>
+                <p className="item-tags">{tags}</p>
+            </div>
+            <div className="ar-btn-container">
+                <button className='approve-btn' onClick={handleApprove}>Approve</button>
+                <button className='reject-btn' onClick={handleReject}>Reject</button>
             </div>
         </div>
     )
