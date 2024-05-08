@@ -1,6 +1,8 @@
 const catchAsync = require("./../utils/catchAsync");
 const List = require("../model/listModel");
 const User = require("../model/userModel");
+const Receipt = require("../model/receiptModel");
+const Request = require("../model/requestModel");
 
 exports.createList = catchAsync(async (req, res) => {
   const { title, details, tags, media, user } = req.body;
@@ -144,5 +146,100 @@ exports.searchList = catchAsync(async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json("Error occurred while searching for listing. Please try again!");
+    }
+});
+
+exports.request = catchAsync(async (req, res) => {
+  const { listId, requesterId, date } = req.body;
+  try {
+      const list = await List.findById(listId);
+      if (!list) {
+          return res.status(404).json({ error: "List not found" });
+      }
+      
+      const request = await Request.create({
+          list: listId,
+          listInfo: list,
+          listCreator: list.creator,
+          requester: requesterId,
+          status: 'pending',
+          dateOfRequest: date
+      });
+      res.status(201).json({ message: "Request sent successfully", request: request });
+  } catch (err) {
+      res.status(500).json({ error: "Couldn't send request" });
+  }
+});
+
+
+exports.acceptRequest = catchAsync(async (req, res) => {
+  const { requestId } = req.body;
+  try {
+      const request = await Request.findById(requestId).populate('list');
+      if (!request) {
+          return res.status(404).json({ error: "Request not found" });
+      }
+      if (request.status === 'accepted') {
+          return res.status(400).json({ error: "Request already accepted" });
+      }
+      request.status = 'accepted';
+      await request.save();
+
+      const receipt = await Receipt.create({
+          list: request.list,
+          listInfo: request.listInfo,
+          requester: request.requester,
+          sharer: request.listCreator,
+          dateOfRequest: request.dateOfRequest
+      });
+
+      res.status(200).json({ message: "Request accepted successfully", receiptId: receipt._id });
+  } catch (err) {
+      res.status(500).json({ error: "Couldn't accept request" });
+  }
+});
+
+
+
+exports.rejectRequest = catchAsync(async (req, res) => {
+  const { requestId } = req.body;
+    try {
+        const request = await Request.findByIdAndDelete(requestId);
+        if (!request) {
+            return res.status(404).json({ error: "Request not found" });
+        }
+        res.status(200).json({ message: "Request rejected successfully" });
+    } catch (err) {
+        res.status(500).json({ error: "Couldn't reject request" });
+    }
+});
+
+exports.fetchRequest = catchAsync(async (req, res) => {
+  const { userId } = req.body;
+  try {
+      const requests = await Request.find({
+          listCreator: userId
+      }).populate({
+          path: 'list',
+          populate: {
+              path: 'creator',
+              model: 'User'
+          }
+      }).populate('requester');
+      res.status(200).json(requests);
+  } catch (err) {
+      res.status(500).json({ error: "Couldn't fetch requests" });
+  }
+});
+
+
+exports.fetchReceipt = catchAsync(async (req, res) => {
+  const { userId } = req.body;
+    try {
+        const receipts = await Receipt.find({ $or: [{ requester: userId }, { sharer: userId }] })
+            .populate('list requester sharer');
+        res.status(200).json(receipts);
+    } catch (err) {
+        res.status(500).json({ error: "Couldn't fetch receipts" });
     }
 });
