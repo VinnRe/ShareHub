@@ -46,8 +46,8 @@ const Share = () => {
     
                             <label htmlFor="item-category">Category</label><br />
                             <select className="item-category" value={category} onChange={(e) => {setCategory(e.target.value)}}>
-                                <option value="Appliances">Appliance</option>
-                                <option value="Tools">Tool</option>
+                                <option value="Appliance">Appliance</option>
+                                <option value="Tool">Tool</option>
                                 <option value="Service">Service</option>
                                 <option value="Clothing">Clothing</option>
                             </select>
