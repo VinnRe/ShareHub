@@ -11,7 +11,7 @@ export const useFileUpload = () => {
         const formData = new FormData(); 
         formData.append("file", file); 
 
-        const response = await fetch('/api/pdf/upload', {
+        const response = await fetch('/api/image/upload', {
             method: 'POST',
             body: formData
         });
