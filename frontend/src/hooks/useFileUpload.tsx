@@ -2,28 +2,31 @@ import { useState } from "react";
 
 export const useFileUpload = () => {
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false); 
+    const [isLoading, setIsLoading] = useState(false); 
 
-    const uploadFile = async (file: File) => {
+    const uploadFile = async (file) => {
         setIsLoading(true);
         setError(null);
 
-        const formData = new FormData(); 
-        formData.append("file", file); 
+        try {
+            const formData = new FormData(); 
+            formData.append("file", file); 
 
-        const response = await fetch('/api/image/upload', {
-            method: 'POST',
-            body: formData
-        });
+            const response = await fetch('/api/image/upload', {
+                method: 'POST',
+                body: formData
+            });
 
-        const json = await response.json();
+            const json = await response.json();
 
-        if (!response.ok) {
+            if (!response.ok) {
+                throw new Error(json.error); 
+            }
+            
             setIsLoading(false);
-            setError(json.error); 
-        } else {
+            setError(null);
+        } catch (error) {
             setIsLoading(false);
-            setError(null); 
         }
     };
 
