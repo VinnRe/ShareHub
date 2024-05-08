@@ -4,6 +4,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { useLogout } from "../hooks/useLogout";
 import { MdAccountCircle } from "react-icons/md";
 import { useAccountUpdate } from "../hooks/useAccountUpdate";
+import Receipt from "../components/Receipt";
 
 const AccountSettings = () => {
     const [userName, setUserName] = useState('')
@@ -17,16 +18,52 @@ const AccountSettings = () => {
     const [emailChange, setEmailChange] = useState('CHANGE')
     const [passwordChange, setPasswordChange] = useState('CHANGE')
     const { updateAccount } = useAccountUpdate()
+    const [showForm, setShowForm] = useState(false);
 
     const { logout } = useLogout()
 
+    const toggleForm = () => {
+        setShowForm(!showForm);
+        console.log("CLICKS")
+      };
+
     useEffect(() => {
-        const storedUserDataString = localStorage.getItem("user");
-        if (storedUserDataString) {
-            const storedUserData = JSON.parse(storedUserDataString);
-            setDisplayUserName(storedUserData.data.name);
-            setDisplayEmail(storedUserData.data.email);
-        }
+        const fetchUser = async () => {
+            try {
+                const storedUserDataString = localStorage.getItem("user");
+                if (!storedUserDataString) {
+                    console.error("No user data found in localStorage");
+                    return;
+                }
+                
+                const storedUserData = JSON.parse(storedUserDataString);
+                const token = storedUserData.token;
+
+                if (!token) {
+                    console.error("No token found in localStorage");
+                    return;
+                }
+        
+                const response = await fetch("/api/user/fetch", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    setDisplayUserName(userData.name);
+                    setUserName(userData.name)
+                    setDisplayEmail(userData.email);
+                } else {
+                    console.error("Error fetching user data:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };        
+
+        fetchUser()
     }, []);
 
     const handleLogout = () => {
@@ -131,12 +168,15 @@ const AccountSettings = () => {
                     </div>
                 </main>
                 <main className="as-container-right">
+                    <button className="receipt-btn" onClick={toggleForm}>Reciepts</button>
+                    {showForm && <Receipt onClose={toggleForm} />}
                     <MdAccountCircle fontSize="15rem" className="default-acc-pic"/>
                     <h3>{displayUserName}</h3>
                     <p>{displayEmail}</p>
                 </main>
                 <button className="as-save-btn" onClick={handleSubmit}>Save Changes</button>
             </div>
+            {showForm && <div className="overlay" onClick={toggleForm}></div>}
         </section>
     )
 }
