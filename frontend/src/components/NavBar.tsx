@@ -108,13 +108,14 @@ const NavBar = () => {
         >
           SHARE
         </StyledLink>
-        {/* MAKE AN IF STATEMENT THAT IF USER IS MOD OR ADMIN MODERATE WILL SHOW */}
-        <StyledLink
-          to="/moderate"
-          active={location.pathname.startsWith("/moderate")}
-        >
-          MODERATE
-        </StyledLink>
+        {user && (user.data.role === "admin") && (
+          <StyledLink
+            to="/moderate"
+            active={location.pathname.startsWith("/moderate")}
+          >
+            MODERATE
+          </StyledLink>
+        )}
       </div>
       <div className="right-nav-container">{renderRightNavButtons()}</div>
     </nav>
