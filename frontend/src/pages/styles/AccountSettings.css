@@ -30,6 +30,23 @@
     background-color: var(--brown-color);
 }
 
+.account-settings .receipt-btn {
+    color: white;
+    background-color: var(--orange-color);
+    font-size: 1rem;
+    border-radius: 3rem;
+    width: 13vw;
+    height: 6vh;
+    margin-top: 1rem;
+    border: 0;
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.account-settings .receipt-btn:hover {
+    background-color: var(--brown-color);
+}
+
 .as-top-header {
     display: flex;
     align-items: center;
