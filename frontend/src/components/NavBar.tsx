@@ -7,6 +7,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { useLogout } from "../hooks/useLogout";
 import LogoText from '../assets/logo_text.png'
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 interface ButtonProps {
   active: boolean;
@@ -22,6 +23,7 @@ const NavBar = () => {
   const { user } = useAuthContext();
   const { logout } = useLogout()
   const navigate = useNavigate()
+  const [userName, setUserName] = useState('')
 
   const handleLogout = () => {
     logout()
@@ -31,6 +33,37 @@ const NavBar = () => {
     navigate('/account-settings')
   }
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const storedUserDataString = localStorage.getItem("user");
+        if (!storedUserDataString) {
+            console.error("No user data found in localStorage");
+            return;
+        }
+        
+        const storedUserData = JSON.parse(storedUserDataString);
+        const token = storedUserData.token;
+
+        if (!token) {
+            console.error("No token found in localStorage");
+            return;
+        }
+
+      const response = await fetch("/api/user/fetch", {
+          headers: {
+              "Authorization": `Bearer ${token}`
+          }
+      });
+      
+      if (response.ok) {
+          const userData = await response.json();
+          setUserName(userData.name);
+        }
+    }
+
+    fetchUser()
+  }, []);
+
   const renderRightNavButtons = () => {
     if (location.pathname.startsWith("/community-forum")) {
       return;
@@ -39,9 +72,9 @@ const NavBar = () => {
         <>
           {user && (
             <>
-              <span className="nav-user">{user.data.name}</span>
-              <button className="button-user" onClick={handleSwitchPage}><MdAccountCircle /></button>
-              <button className="button-user" onClick={handleLogout}><IoLogOut style={{ strokeWidth: '1.3rem' }}/></button>
+              <span className="nav-user">{userName}</span>
+              <button className="button-user" onClick={handleSwitchPage}><MdAccountCircle className="right-btns"/></button>
+              <button className="button-user" onClick={handleLogout}><IoLogOut style={{ strokeWidth: '1.3rem' }} className="right-btns"/></button>
             </>
           )}
           {!user && (
