@@ -7,6 +7,7 @@ import logo from '../assets/logo_big.png'
 import Item from '../components/Item';
 import { useEffect, useState } from 'react';
 import { useListedSearch } from '../hooks/useListedSearch';
+import { useFilter } from '../hooks/useFilter';
 
 interface ListedProps {
     _id: string;
@@ -22,7 +23,8 @@ interface ListedProps {
 const Home = () => {
     const [search, setSearch] = useState('')
     const [listed, setListed] = useState<any>(null)
-    const { searchListed, searchResults, isLoadingS } = useListedSearch()
+    const { searchListed, searchResults, setIsLoadingS } = useListedSearch()
+    const { filterItems, setIsLoading, error, filteredItems } = useFilter()
 
     const filterResources = async (filterValue: any) => {
         const filtered = filterValue;
@@ -62,26 +64,51 @@ const Home = () => {
     }
 
     const handleSearch = async () => {
-        !isLoadingS
+        setIsLoadingS(true)
+        
         try {
             if (search === "") {
-              fetchListed();
+                fetchListed();
             } else {
-              await searchListed(search);
-              const searched = await searchResults;
-              filterResources(searched);
+                await searchListed(search);
+                // const searched = await searchResults;
+                console.log("SEARCH RESULTS:", searchResults)
+                filterResources(searchResults);
             }
-          } catch (error) {
+        } catch (error) {
             console.error("Error searching for resources:", error);
-          } finally {
-            isLoadingS;
-          }
+        } finally {
+            setIsLoadingS(false)
+        }
+    }
+
+    const handleCategoryFilter = async (tags: string[]) => {
+        setIsLoading(true);
+        await filterItems(tags.join(","));
+        filterResources(filteredItems)
+        setIsLoading(false);
     }
 
     useEffect(() => {
         fetchListed()
         return
     }, [])
+
+    useEffect(() => {
+        if (search !== "") {
+            handleSearch();
+        } else {
+            fetchListed();
+        }
+    }, [search])
+    
+    useEffect(() => {
+        filterResources(searchResults);
+    }, [searchResults])
+
+    useEffect(() => {
+        filterResources(filteredItems);
+    }, [filteredItems])
 
     return (
         <div className='home-page'>
@@ -110,26 +137,26 @@ const Home = () => {
                         <h2>Categories</h2>
                     </div>
                     <div className="category-sections">
-                        <div className="category">
+                        <button className="category" onClick={() => handleCategoryFilter(["Appliance"])}>
                             <MdDevices fontSize="5rem" className="category-icon" />
-                            <p className="Applicances">Appliances</p>
-                        </div>
-                        <div className="category">
+                            <p className="Appliances">Appliances</p>
+                        </button>
+                        <button className="category" onClick={() => handleCategoryFilter(["Tool"])}>
                             <FaTools fontSize="5rem" className="category-icon"  />
                             <p className="Tools">Tools</p>
-                        </div>
-                        <div className="category">
+                        </button>
+                        <button className="category" onClick={() => handleCategoryFilter(["Service"])}>
                             <FaCarSide fontSize="5rem" className="category-icon"  />
                             <p className="Services">Services</p>
-                        </div>
-                        <div className="category">
+                        </button>
+                        <button className="category" onClick={() => handleCategoryFilter(["Clothing"])}>
                             <GiClothes fontSize="5rem" className="category-icon"  />
                             <p className="Clothing">Clothing</p>
-                        </div>
-                        <div className="category">
+                        </button>
+                        <button className="category" onClick={() => fetchListed()}>
                             <MdOutlineDensitySmall fontSize="5rem" className="category-icon"  />
                             <p className="all-categories">All Categories</p>
-                        </div>
+                        </button>
                     </div>
                 </div>
 
@@ -143,6 +170,7 @@ const Home = () => {
                             listed.map((list: ListedProps) => (
                             <Item
                                 key={list._id}
+                                itemID={list._id}
                                 title={list.title}
                                 creator={list.ownerName}
                                 createdAt={new Date(list.createdAt)}

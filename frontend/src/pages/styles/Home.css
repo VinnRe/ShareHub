@@ -110,10 +110,16 @@
 .category-sections .category {
     border: 0.3rem solid var(--purple-color);
     border-radius: 1rem;
-    width: 10vw;
-    height: 15vh;
+    width: 12vw;
+    height: 20vh;
     color: var(--dark-purple-color);
     box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.4);
+}
+
+.category-sections .category p {
+    color: var(--navy-blue-color);
+    font-size: 1rem;
+    font-family: "Extrabld";
 }
 
 .category-sections .category .category-icon {
@@ -128,6 +134,10 @@
 }
 
 .category-sections .category:hover .category-icon {
+    color: var(--light-color);
+}
+
+.category-sections .category:hover p {
     color: var(--light-color);
 }
 

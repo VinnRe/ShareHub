@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useListedSearch = () => {
     const [error, setError] = useState<string | null>(null);
@@ -27,11 +27,13 @@ export const useListedSearch = () => {
             setIsLoadingS(false);
             return;
         }
+        console.log("SEARCH TERM: ", searchTerm);
         const json = await response.json();
         console.log("Response JSON:", json);
         setSearchResults(json);
+        console.log("SEARCH RESULTS USL:", searchResults)
         setIsLoadingS(false);
-    };
 
-    return { searchListed, searchResults, isLoadingS, error };
+    }
+    return { searchListed, searchResults, setIsLoadingS, error };
 };
