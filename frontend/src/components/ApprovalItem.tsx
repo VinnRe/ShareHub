@@ -86,10 +86,6 @@ const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
                     {/* PUT IMAGE/S HERE */}
                 </div>
             </div>
-            <div className="btn-container">
-                <button className="prev-btn">&lt;</button>
-                <button className="next-btn">&gt;</button>
-            </div>
             <div className="item-info">
                 <h3>{title}</h3>
                 <p className="item-details">{details}</p>

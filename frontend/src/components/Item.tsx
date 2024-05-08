@@ -39,14 +39,14 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
     
             if (response.ok) {
                 // Add Success popup
-                console.log("Successfully approved item: ", response)
+                console.log("Successfully deleted item: ", response)
             } else {
                 // add ERROR
-                console.error("Failed to approve item: ", response)
+                console.error("Failed to delete item: ", response)
             }
         } catch (error) {
             
-            console.error("Failed to approve item: ", error)
+            console.error("Failed to delete item: ", error)
         }
     }
 
@@ -56,10 +56,6 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
                 <div className="scrollable-images">
                     {/* PUT IMAGE/S HERE */}
                 </div>
-            </div>
-            <div className="btn-container">
-                <button className="prev-btn">&lt;</button>
-                <button className="next-btn">&gt;</button>
             </div>
             {/* <h3>{listing.itemName}</h3>
             <p>₱ {listing.itemPrice}</p>
