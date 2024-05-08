@@ -1,12 +1,26 @@
+import { useState, useEffect } from 'react';
 import './styles/Share.css'
+import { useCreate } from '../hooks/useCreateList';
 
 const Share = () => {
+    const [category, setCategory] = useState('Appliances')
+    const [name, setName] = useState('')
+    const [details, setDetails] = useState('')
+    const [media, setMedia] = useState<any>('TEST')
+    const { createList, isLoading } = useCreate()
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setMedia("test.jpeg")
+        await createList(category, name, details, media)
+    }
+
     return (
         <div className="share-page">
             {/* FORM SECTION */}
             <h1 className="listing-header">Share Something!</h1>
             <div className="listing-container">
-                <form method="post" encType="multipart/form-data">
+                <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div className="form-group form-group-container">
                         <div className="form-group form-group-left">
                             <label htmlFor="item-images">Insert Picture</label><br />
@@ -15,12 +29,23 @@ const Share = () => {
                         </div>
                         <div className="form-group form-group-right">
                             <label htmlFor="item-name">Name</label><br />
-                            <input type="text" className="item-name" name="item-name" placeholder="Insert Item Name" />    
+                            <input 
+                                type="text" 
+                                className="item-name" 
+                                placeholder="Insert Item Name" 
+                                value={name}
+                                onChange={(e) => {setName(e.target.value)}}
+                            />    
                             <label htmlFor="item-details">Details</label><br />
-                            <textarea className="item-details" name="item-details" placeholder="Insert Item Description"></textarea>
+                            <textarea 
+                                className="item-details"  
+                                placeholder="Insert Item Description"
+                                value={details}
+                                onChange={(e) => {setDetails(e.target.value)}}
+                            ></textarea>
     
                             <label htmlFor="item-category">Category</label><br />
-                            <select className="item-category" name="item-category">
+                            <select className="item-category" value={category} onChange={(e) => {setCategory(e.target.value)}}>
                                 <option value="Appliances">Appliance</option>
                                 <option value="Tools">Tool</option>
                                 <option value="Service">Service</option>
@@ -28,7 +53,7 @@ const Share = () => {
                             </select>
                         </div>
                     </div>
-                    <input type="button" value="Create Listing" className="create-listing-button" />
+                    <button className="create-listing-button">Create Listing</button>
                 </form>
             </div>
             <div className="popup">Item Listed</div>
