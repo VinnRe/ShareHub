@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./styles/Receipt.css";
+import "./styles/ReceiptForm.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Request from "./Request";
 
@@ -9,14 +9,25 @@ interface PostFormProps {
 
 interface RequestProp {
     _id: string;
-    userID: string;
-    title: string;
-    details: string;
-    media: File;
-    creator: string;
-    createdAt: Date;
-    tags: string[];
-    ownerName: string;
+    list: {
+      creator: {
+        name: string;
+      };
+    };
+    listCreator: string;
+    listInfo: {
+      createdAt: string;
+      details: string;
+      media: File;
+      tags: string[];
+      title: string;
+      _id: string;
+    };
+    requester: {
+      name: string;
+      email: string;
+      _id: string;
+    };
 }
 
 const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
@@ -60,10 +71,10 @@ const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
         console.log("JSON:", json);
 
         const requestData = json.map((item: any) => ({
-            ...item.requestData,
-            ownerName: item.ownerInfo.name
+            ...item
         }));
         setRequested(requestData);
+        console.log("Request Data: ", requestData)
     } catch (error) {
         console.error("Error fetching requests:", error);
     }
@@ -82,21 +93,21 @@ const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
         <div className="receipts">
           <div className="requests">
             <h1 className="requests-header">REQUESTS</h1>
-            {/* {requested &&
+            {requested &&
               requested.map((request: RequestProp) => (
               <Request
                   key={request._id}
-                  itemID={request._id}
-                  userID={request.}
-                  title={request.title}
-                  creator={request.ownerName}
-                  createdAt={new Date(request.createdAt)}
-                  details={request.details}
-                  media={request.media}
-                  tags={request.tags}
+                  itemID={request.listInfo._id}
+                  userID={request.listCreator}
+                  title={request.listInfo.title}
+                  creator={request.list.creator.name}
+                  createdAt={new Date(request.listInfo.createdAt)}
+                  details={request.listInfo.details}
+                  media={request.listInfo.media}
+                  tags={request.listInfo.tags}
               />
               ))}
-            {!requested && <p>Loading resources...</p>} */}
+            {!requested && <p>Loading resources...</p>}
           </div>
           <div className="accepted-receipt">
             <h1 className="receipt-header">RECEIPTS</h1>
