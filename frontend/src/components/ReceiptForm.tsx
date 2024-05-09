@@ -37,16 +37,21 @@ const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
               console.error("No token found in localStorage");
               return;
           }
-  
+
+          const payload = {
+            userId: user.data._id
+          }
+
           const response = await fetch("/api/list/fetch/request", {
               method: "POST",
               headers: {
                   "Authorization": `Bearer ${token}`
-              }
+              },
+              body: JSON.stringify(payload)
           });
         const json = await response.json()
     
-        console.log(json)
+        console.log("JSON:", json)
         if (response.ok) {
           const requestData = json.map((item: any) => {
             console.log(item)
