@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/Item.css'
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useRequest } from '../hooks/useRequest';
 
 interface ItemProps {
     itemID: string
@@ -10,12 +11,14 @@ interface ItemProps {
     creator: string;
     createdAt: Date;
     tags: string[];
+    requesterID: string
 }
 
 const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, createdAt, tags }) => {
 
     const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
     const { user } = useAuthContext()
+    const { requestItem } = useRequest()
 
     const handleDelete = async () => {
         try {
@@ -50,6 +53,10 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
         }
     }
 
+    const handleBorrow = async () => {
+        await requestItem( itemID, createdAt )
+    }
+
     return (
         <div className="item-container">
             <div className="image-container">
@@ -57,9 +64,6 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
                     {/* PUT IMAGE/S HERE */}
                 </div>
             </div>
-            {/* <h3>{listing.itemName}</h3>
-            <p>₱ {listing.itemPrice}</p>
-            <p className="item-details">{listing.itemDescription}</p> */}
             <div className="item-info">
                 <h3>{title}</h3>
                 <p className="item-details">{details}</p>
@@ -67,7 +71,7 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
                 <p className="item-createdAt">{createdAtString}</p>
                 <p className="item-tags">{tags}</p>
             </div>
-            <button className='get-btn'>Borrow</button>
+            <button className='get-btn' onClick={handleBorrow}>Borrow</button>
             {user && user.data.role == "admin" && (
                 <button className="remove-btn" onClick={handleDelete}>Remove</button>
             )}
