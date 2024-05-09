@@ -54,14 +54,6 @@
     height: 150px;
 }
 
-.scrollable-images img:first-child {
-    display: inline-block;
-}
-
-.scrollable-images img:not(:first-child) {
-    display: none;
-}
-
 .item-details {
     height: 100vh;
     overflow-y: scroll;

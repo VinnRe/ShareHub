@@ -2,6 +2,7 @@ import React from 'react';
 import './styles/Item.css'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useRequest } from '../hooks/useRequest';
+import { useState, useEffect } from 'react';
 
 interface ItemProps {
     itemID: string
@@ -57,11 +58,15 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
         await requestItem( itemID, createdAt )
     }
 
+    function importImage(media: string) {
+        return import(`../assets/images${media}.jpg`)
+    }
+
     return (
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
-                <img src={`/images/${media}`} alt={title} />
+                    <img src={importImage} alt="" />
                 </div>
             </div>
             <div className="item-info">
