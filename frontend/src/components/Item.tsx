@@ -7,7 +7,7 @@ interface ItemProps {
     itemID: string
     title: string;
     details: string;
-    media: File;
+    media: string;
     creator: string;
     createdAt: Date;
     tags: string[];
