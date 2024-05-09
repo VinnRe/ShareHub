@@ -7,7 +7,7 @@ interface ItemProps {
     itemID: string
     title: string;
     details: string;
-    media: File;
+    media: string;
     creator: string;
     createdAt: Date;
     tags: string[];
@@ -61,14 +61,14 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
-                    {/* PUT IMAGE/S HERE */}
+                <img src={`/images/${media}`} alt={title} />
                 </div>
             </div>
             <div className="item-info">
                 <h3>{title}</h3>
                 <p className="item-details">{details}</p>
                 <p className="item-creator">{creator}</p>
-                <p className="item-createdAt">{createdAtString}</p>
+                <p className="item-createdAt">{createdAtString}</p> 
                 <p className="item-tags">{tags}</p>
             </div>
             <button className='get-btn' onClick={handleBorrow}>Borrow</button>
