@@ -8,6 +8,7 @@ import Item from '../components/Item';
 import { useEffect, useState } from 'react';
 import { useListedSearch } from '../hooks/useListedSearch';
 import { useFilter } from '../hooks/useFilter';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 interface ListedProps {
     _id: string;
@@ -25,6 +26,7 @@ const Home = () => {
     const [listed, setListed] = useState<any>(null)
     const { searchListed, searchResults, setIsLoadingS } = useListedSearch()
     const { filterItems, setIsLoading, error, filteredItems } = useFilter()
+    const { user } = useAuthContext()
 
     const filterResources = async (filterValue: any) => {
         const filtered = filterValue;
@@ -177,6 +179,7 @@ const Home = () => {
                                 details={list.details}
                                 media={list.media}
                                 tags={list.tags}
+                                requesterID={user.data._id}
                             />
                             ))}
                         {!listed && <p>Loading resources...</p>}
