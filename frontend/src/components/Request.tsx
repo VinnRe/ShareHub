@@ -1,4 +1,4 @@
-import './styles/ApprovalItem.css'
+import './styles/Request.css'
 import { useAuthContext } from '../hooks/useAuthContext';
 
 interface ItemProps {
@@ -13,7 +13,7 @@ interface ItemProps {
 }
 
 const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, creator, createdAt, tags }) => {
-    const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
+    const createdAtString = createdAt ? new Date(createdAt).toLocaleDateString() : '';
 
     const { user } = useAuthContext()
 
@@ -34,7 +34,7 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, c
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ listId: itemID })
+                body: JSON.stringify({ requestId: itemID })
             })
     
             if (response.ok) {
@@ -61,13 +61,14 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, c
             const storedUserData = JSON.parse(storedUserDataString);
             const token = storedUserData.token;
     
+            console.log(itemID)
             const response = await fetch("/api/list/reject", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ listId: itemID })
+                body: JSON.stringify({ requestId: itemID })
             })
     
             if (response.ok) {
