@@ -56,7 +56,7 @@
 }
 
 .hero-texts h4 {
-    font-size: 25px;
+    font-size: 5rem;
     margin: 0;
 }
 .hero-texts h2,
@@ -87,6 +87,40 @@
     height: auto;
 }
 
+/* AD SPACE */
+.ad-space {
+    display: flex;
+    justify-content: center;
+}
+
+.ads-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    width: 100%;
+    margin-bottom: 10vh;
+}
+
+.ad-space a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.ad-space img {
+    max-width: 100%;
+    height: auto;
+}
+
+.laza-a {
+    width: 53.4%;
+}
+
+.shop-a {
+    width: 50%;
+}
 
 /* CATEGORIES */
 .categories {
@@ -97,6 +131,8 @@
 .categories-header {
     text-align: center;
     width: 100%;
+    font-size: 2rem;
+    margin-bottom: 2rem;
 }
 
 .category-sections {
@@ -141,10 +177,25 @@
     color: var(--light-color);
 }
 
+.for-you .for-you-header {
+    text-align: center;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    font-size: 3rem;
+}
+
 .for-you .listings {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    border: var(--orange-color);
-    border-style: solid;
+    gap: 6rem;
+    border: 0.4rem solid var(--orange-color);
+}
+
+.no-items-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+    text-align: center;
 }

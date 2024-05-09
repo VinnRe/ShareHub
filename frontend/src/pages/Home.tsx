@@ -9,12 +9,14 @@ import { useEffect, useState } from 'react';
 import { useListedSearch } from '../hooks/useListedSearch';
 import { useFilter } from '../hooks/useFilter';
 import { useAuthContext } from '../hooks/useAuthContext';
+import lazada from '../assets/ADs/lazada.jpg'
+import shopee from '../assets/ADs/shopee.jpg'
 
 interface ListedProps {
     _id: string;
     title: string;
     details: string;
-    media: File;
+    media: string;
     creator: string;
     createdAt: Date;
     tags: string[];
@@ -132,6 +134,18 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* AD SPACE */}
+            <section className="ad-space">
+                <div className="ads-container">
+                    <a href="www.lazada.com.ph" className='laza-a'>
+                        <img src={lazada} alt="lazada_ad" className='laza-ad'/>
+                    </a>
+                    <a href="https://shopee.ph/" className='shop-a'>
+                        <img src={shopee} alt="shopee_ad" className='shop-ad'/>
+                    </a>
+                </div>
+            </section>
+
             {/* CONTENT SECTION */}
             <section className="content">
                 <div className="categories">
@@ -164,25 +178,31 @@ const Home = () => {
 
                 {/* FOR YOU */}
                 <div className="for-you">
-                    <div className="categories-header">
+                    <div className="for-you-header">
                         <h2>For You</h2>
                     </div>
                     <div className="listings">
-                        {listed &&
+                        {listed && listed.length > 0 ? (
                             listed.map((list: ListedProps) => (
-                            <Item
-                                key={list._id}
-                                itemID={list._id}
-                                title={list.title}
-                                creator={list.ownerName}
-                                createdAt={new Date(list.createdAt)}
-                                details={list.details}
-                                media={list.media}
-                                tags={list.tags}
-                                requesterID={user.data._id}
-                            />
-                            ))}
-                        {!listed && <p>Loading resources...</p>}
+                                <Item
+                                    key={list._id}
+                                    itemID={list._id}
+                                    title={list.title}
+                                    creator={list.ownerName}
+                                    createdAt={new Date(list.createdAt)}
+                                    details={list.details}
+                                    media={list.media}
+                                    tags={list.tags}
+                                    requesterID={user.data._id}
+                                />
+                            ))
+                        ) : (
+                            <div className="no-items-container">
+                                <h1 className='no-items'>NO ITEMS ARE BEING SHARED CURRENTLY</h1>
+                            </div>
+                        )
+                        }
+                        {!listed && <p className='loading-items'>Loading resources...</p>}
                     </div>
                 </div>
             </section>
