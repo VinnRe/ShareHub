@@ -193,6 +193,8 @@ exports.acceptRequest = catchAsync(async (req, res) => {
           dateOfRequest: request.dateOfRequest
       });
 
+      await Request.findByIdAndDelete(requestId);
+
       res.status(200).json({ message: "Request accepted successfully", receiptId: receipt._id });
   } catch (err) {
       res.status(500).json({ error: "Couldn't accept request" });
