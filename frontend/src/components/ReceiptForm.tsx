@@ -24,46 +24,51 @@ const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
   const { user } = useAuthContext()
 
   const requests = async () => {
+    try {
         const storedUserDataString = localStorage.getItem("user");
-          if (!storedUserDataString) {
-              console.error("No user data found in localStorage");
-              return;
-          }
-          
-          const storedUserData = JSON.parse(storedUserDataString);
-          const token = storedUserData.token;
-
-          if (!token) {
-              console.error("No token found in localStorage");
-              return;
-          }
-
-          const payload = {
-            userId: user.data._id
-          }
-
-          const response = await fetch("/api/list/fetch/request", {
-              method: "POST",
-              headers: {
-                  "Authorization": `Bearer ${token}`
-              },
-              body: JSON.stringify(payload)
-          });
-        const json = await response.json()
-    
-        console.log("JSON:", json)
-        if (response.ok) {
-          const requestData = json.map((item: any) => {
-            console.log(item)
-            return {
-                ...item.requestData,
-                ownerName: item.ownerInfo.name
-            }
-          })
-          setRequested(requestData)
-          console.log(requestData)
+        if (!storedUserDataString) {
+            console.error("No user data found in localStorage");
+            return;
         }
-  }
+        
+        const storedUserData = JSON.parse(storedUserDataString);
+        const token = storedUserData.token;
+
+        if (!token) {
+            console.error("No token found in localStorage");
+            return;
+        }
+
+        const payload = {
+            userId: user.data._id
+        };
+
+        const response = await fetch("/api/list/fetch/request", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const json = await response.json();
+        console.log("JSON:", json);
+
+        const requestData = json.map((item: any) => ({
+            ...item.requestData,
+            ownerName: item.ownerInfo.name
+        }));
+        setRequested(requestData);
+    } catch (error) {
+        console.error("Error fetching requests:", error);
+    }
+};
+
 
   useEffect(() => {
     requests()
