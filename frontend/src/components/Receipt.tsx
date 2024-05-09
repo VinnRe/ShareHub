@@ -2,7 +2,6 @@ import './styles/Request.css'
 
 interface ItemProps {
     itemID: string;
-    userID: string
     title: string;
     details: string;
     media: File;
