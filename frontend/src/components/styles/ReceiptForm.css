@@ -55,5 +55,10 @@
 
 .requests {
     overflow-y: scroll;
-    height: 60vh;
+    height: 30vh;
+}
+
+.accepted-receipt {
+    overflow-y: scroll;
+    height: 30vh;
 }

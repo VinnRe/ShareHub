@@ -7,12 +7,13 @@ interface ItemProps {
     title: string;
     details: string;
     media: File;
-    creator: string;
+    borrowerName: string;
+    borrowerEmail: string;
     createdAt: Date;
     tags: string[];
 }
 
-const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, creator, createdAt, tags }) => {
+const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, borrowerName, borrowerEmail, createdAt, tags }) => {
     const createdAtString = createdAt ? new Date(createdAt).toLocaleDateString() : '';
 
     const { user } = useAuthContext()
@@ -28,7 +29,7 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, c
             const storedUserData = JSON.parse(storedUserDataString);
             const token = storedUserData.token;
 
-            const response = await fetch("/api/list/approve", {
+            const response = await fetch("/api/list/accept", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,18 +74,18 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, c
     
             if (response.ok) {
                 // Add Success popup
-                console.log("Successfully approved item: ", response)
+                console.log("Successfully rejected item: ", response)
             } else {
                 // add ERROR
-                console.error("Failed to approve item: ", response)
+                console.error("Failed to reject item: ", response)
             }
         } catch (error) {
             
-            console.error("Failed to approve item: ", error)
+            console.error("Failed to reject item: ", error)
         }
     }
 
-    return (
+    return user && user.data._id === userID && (
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
@@ -94,16 +95,16 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, c
             <div className="item-info">
                 <h3>{title}</h3>
                 <p className="item-details">{details}</p>
-                <p className="item-creator">{creator}</p>
+                <p>Requesting to borrow: </p>
+                <p className="item-creator">{borrowerName}</p>
+                <p className="item-creator">{borrowerEmail}</p>
                 <p className="item-createdAt">{createdAtString}</p>
                 <p className="item-tags">{tags}</p>
             </div>
-            {user && user.data._id === userID && (
-                <div className="ar-btn-container">
-                    <button className='approve-btn' onClick={handleApprove}>Approve</button>
-                    <button className='reject-btn' onClick={handleReject}>Reject</button>
-                </div>
-            )}
+            <div className="ar-btn-container">
+                <button className='approve-btn' onClick={handleApprove}>Approve</button>
+                <button className='reject-btn' onClick={handleReject}>Reject</button>
+            </div>
         </div>
     )
 }
