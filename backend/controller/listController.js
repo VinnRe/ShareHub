@@ -182,7 +182,6 @@ exports.acceptRequest = catchAsync(async (req, res) => {
       if (request.status === 'accepted') {
           return res.status(400).json({ error: "Request already accepted" });
       }
-      request.status = 'accepted';
       await request.save();
 
       const receipt = await Receipt.create({
@@ -194,6 +193,7 @@ exports.acceptRequest = catchAsync(async (req, res) => {
       });
 
       await Request.findByIdAndDelete(requestId);
+      await List.findByIdAndDelete(req.list._id);
 
       res.status(200).json({ message: "Request accepted successfully", receiptId: receipt._id });
   } catch (err) {
