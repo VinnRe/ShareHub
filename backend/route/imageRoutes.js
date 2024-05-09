@@ -1,12 +1,13 @@
 const express = require('express');
 const imageController = require('../controller/imageController');
 const multer = require('multer');
+const path = require('path');
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './images/');
+        cb(null, path.join(__dirname, '..', '..', 'frontend', 'src', 'assets', 'images'));
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);

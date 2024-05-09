@@ -9,7 +9,7 @@ exports.uploadImage = async (req, res) => {
     }
 
     const { filename } = req.file;
-    const filePath = path.join(__dirname, '..', 'images', filename);
+    const filePath = path.join(__dirname, '..', '..', 'frontend', 'src', 'assets', 'images', filename);
 
     console.log('imageName:', filename);
     console.log('imagePath:', filePath);
@@ -32,7 +32,7 @@ exports.getImageByName = (req, res) => {
         return res.status(400).json({ message: 'Image name is required' });
     }
 
-    const imagePath = path.join(__dirname, '..', 'images', imageName);
+    const imagePath = path.join(__dirname, '..', '..', 'frontend', 'src', 'assets', 'images', filename);
 
     res.sendFile(imagePath, (err) => {
         if (err) {
