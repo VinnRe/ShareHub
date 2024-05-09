@@ -20,6 +20,7 @@ module.exports = app;
 app.use("/api/user", userRoutes);
 app.use("/api/list", listRoutes);
 app.use("/api/image", imageRoutes)
+app.use("/api/images", express.static("/images"))
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
