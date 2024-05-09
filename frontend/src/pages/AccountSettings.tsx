@@ -4,7 +4,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { useLogout } from "../hooks/useLogout";
 import { MdAccountCircle } from "react-icons/md";
 import { useAccountUpdate } from "../hooks/useAccountUpdate";
-import Receipt from "../components/Receipt";
+import ReceiptForm from "../components/ReceiptForm";
 
 const AccountSettings = () => {
     const [userName, setUserName] = useState('')
@@ -24,7 +24,6 @@ const AccountSettings = () => {
 
     const toggleForm = () => {
         setShowForm(!showForm);
-        console.log("CLICKS")
       };
 
     useEffect(() => {
@@ -169,7 +168,7 @@ const AccountSettings = () => {
                 </main>
                 <main className="as-container-right">
                     <button className="receipt-btn" onClick={toggleForm}>Reciepts</button>
-                    {showForm && <Receipt onClose={toggleForm} />}
+                    {showForm && <ReceiptForm onClose={toggleForm} />}
                     <MdAccountCircle fontSize="15rem" className="default-acc-pic"/>
                     <h3>{displayUserName}</h3>
                     <p>{displayEmail}</p>
