@@ -1,4 +1,4 @@
-import './styles/Request.css'
+import './styles/Receipt.css'
 
 interface ItemProps {
     itemID: string;
@@ -19,23 +19,21 @@ const Receipt: React.FC<ItemProps> = ({ itemID, title, details, media, borrowerN
     const imageSrc = `/src/assets/images/${media}`
 
     return (
-        <div className="item-container">
-            <div className="image-container">
-                <div className="scrollable-images">
-                    <img src={imageSrc} alt="" />
-                </div>
+        <div className="item-container-rec">
+            <div className="image-container-rec">
+                <img src={imageSrc} alt="" />
             </div>
-            <div className="item-info">
+            <div className="item-info-rec">
                 <h3>{title}</h3>
                 <p>Sharer: </p>
                 <p>{creator}</p>
                 <p>{creatorEmail}</p>
-                <p className="item-details">{details}</p>
+                <p className="item-details-rec">{details}</p>
                 <p>Borrowed by: </p>
-                <p className="item-creator">{borrowerName}</p>
-                <p className="item-creator">{borrowerEmail}</p>
-                <p className="item-createdAt">{createdAtString}</p>
-                <p className="item-tags">{tags}</p>
+                <p className="item-creator-rec">{borrowerName}</p>
+                <p className="item-creator-rec">{borrowerEmail}</p>
+                <p className="item-createdAt-rec">{createdAtString}</p>
+                <p className="item-tags-rec">{tags}</p>
             </div>
         </div>
     )

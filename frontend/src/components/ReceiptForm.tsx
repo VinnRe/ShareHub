@@ -161,8 +161,8 @@ const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
             &times;
         </span>
         <div className="receipts">
+          <h1 className="requests-header">REQUESTS</h1>
           <div className="requests">
-            <h1 className="requests-header">REQUESTS</h1>
             {requested &&
               requested.map((request: RequestProp) => (
               <Request
@@ -180,8 +180,8 @@ const ReceiptForm: React.FC<PostFormProps> = ({ onClose }) => {
               ))}
             {!requested && <p>You have no requests</p>}
           </div>
+          <h1 className="receipt-header">RECEIPTS</h1>
           <div className="accepted-receipt">
-            <h1 className="receipt-header">RECEIPTS</h1>
             {receiptData &&
               receiptData.map((receipt: ReceiptProp) => (
               <Receipt

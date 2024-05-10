@@ -116,24 +116,22 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, b
     const imageSrc = `/src/assets/images/${media}`
 
     return user && user.data._id === userID && (
-        <div className="item-container">
-            <div className="image-container">
-                <div className="scrollable-images">
-                        <img src={imageSrc} alt="" />
-                </div>
+        <div className="item-container-req">
+            <div className="image-container-req">
+                    <img src={imageSrc} alt="" />
             </div>
-            <div className="item-info">
+            <div className="item-info-req">
                 <h3>{title}</h3>
-                <p className="item-details">{details}</p>
+                <p className="item-details-req">{details}</p>
                 <p>Requesting to borrow: </p>
-                <p className="item-creator">{borrowerName}</p>
-                <p className="item-creator">{borrowerEmail}</p>
-                <p className="item-createdAt">{createdAtString}</p>
-                <p className="item-tags">{tags}</p>
+                <p className="item-creator-req">{borrowerName}</p>
+                <p className="item-creator-req">{borrowerEmail}</p>
+                <p className="item-createdAt-req">{createdAtString}</p>
+                <p className="item-tags-req">{tags}</p>
             </div>
-            <div className="ar-btn-container">
-                <button className='approve-btn' onClick={handleApprove}>Approve</button>
-                <button className='reject-btn' onClick={handleReject}>Reject</button>
+            <div className="ar-btn-container-req">
+                <button className='approve-btn-req' onClick={handleApprove}>Approve</button>
+                <button className='reject-btn-req' onClick={handleReject}>Reject</button>
             </div>
             {showPopup && (
                 <PopUp message={eventMessage} />

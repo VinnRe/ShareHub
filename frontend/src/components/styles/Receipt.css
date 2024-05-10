@@ -1,4 +1,4 @@
-.item-container-req {
+.item-container-rec {
     margin: 20px;
     display: flex;
     flex-direction: column;
@@ -8,11 +8,11 @@
     position: relative;
     width: 300px;
     height: 400px;
-    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.4);
     overflow-y: scroll;
 }
 
-.item-container-req button {
+.item-container-rec button {
     padding: 10px 20px;
     border: none;
     border-radius: 0.7rem;
@@ -23,19 +23,19 @@
     cursor: pointer;
 }
 
-.image-container-req {
+.image-container-rec {
     margin-top: 10vh;
     max-width: 100%;
     height: 20vh;
 }
 
-.image-container-req img {
+.image-container-rec img {
     width: 100%;
     max-width: 100%;
     height: 150px;
 }
 
-.item-info-req {
+.item-info-rec {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,17 +46,17 @@
     margin-bottom: 3vh;
 }
 
-.item-info-req h3 {
+.item-info-rec h3 {
     font-family: "Extrabld";
     font-size: 1.5rem;
 }
 
-.item-info-req .item-creator-req {
+.item-info-rec .item-creator-rec {
     font-family: "Bold";
     margin-bottom: 2vh;
 }
 
-.item-info-req .item-details-req {
+.item-info-rec .item-details-rec {
     width: 100%;
     max-height: 9em;
     overflow-y: auto;
@@ -64,22 +64,22 @@
     margin-bottom: 2vh;
 }
 
-.item-info-req .item-date-req {
+.item-info-rec .item-date-rec {
     margin-bottom: 1vh;
 }
 
-.ar-btn-container-req .approve-btn-req {
+.ar-btn-container-rec .approve-btn-rec {
     background-color: var(--green-color);
 }
 
-.ar-btn-container-req .reject-btn-req {
+.ar-btn-container-rec .reject-btn-rec {
     background-color: var(--purple-color);
 }
 
-.ar-btn-container-req .approve-btn-req:hover {
+.ar-btn-container-rec .approve-btn-rec:hover {
     background-color: var(--dark-green-color);
 }
 
-.ar-btn-container-req .reject-btn-req:hover {
+.ar-btn-container-rec .reject-btn-rec:hover {
     background-color: var(--dark-purple-color);
 }
