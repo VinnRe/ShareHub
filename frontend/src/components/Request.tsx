@@ -85,11 +85,13 @@ const Request: React.FC<ItemProps> = ({ itemID, userID, title, details, media, b
         }
     }
 
+    const imageSrc = `/src/assets/images/${media}`
+
     return user && user.data._id === userID && (
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
-                    {/* PUT IMAGE/S HERE */}
+                        <img src={imageSrc} alt="" />
                 </div>
             </div>
             <div className="item-info">

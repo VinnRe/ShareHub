@@ -76,7 +76,9 @@ const Moderate = () => {
                                     />
                                 ))
                             ) : (
-                                <p>Loading resources...</p>
+                                <div className='loading'>
+                                    <p>LOADING ITEMS...</p>
+                                </div>
                             )}
                         </div>
                     </div>

@@ -27,7 +27,7 @@
     border: 0.3rem solid var(--orange-color);
     box-shadow: 0 0.7rem 1rem rgba(0, 0, 0, 0.6);
     border-radius: 1rem;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .approval-list {
@@ -35,4 +35,9 @@
     flex-wrap: wrap;
     gap: 5rem;
     margin-left: 0.6rem;
+}
+
+.tb-approved .loading {
+    font-size: 5rem;
+    font-family: "Bold";
 }

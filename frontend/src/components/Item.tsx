@@ -61,18 +61,16 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
     const imageSrc = `/src/assets/images/${media}`
 
     return (
-        <div className="item-container">
-            <div className="image-container">
-                <div className="scrollable-images">
-                    <img src={imageSrc} alt="" />
-                </div>
+        <div className="item-container-item">
+            <div className="image-container-item">
+                <img src={imageSrc} alt="" />
             </div>
-            <div className="item-info">
+            <div className="item-info-item">
                 <h3>{title}</h3>
-                <p className="item-details">{details}</p>
-                <p className="item-creator">{creator}</p>
-                <p className="item-createdAt">{createdAtString}</p> 
-                <p className="item-tags">{tags}</p>
+                <p className="item-creator-item">Creator: {creator}</p>
+                <p className="item-details-item">{details}</p>
+                <p className="item-date-item">Date: {createdAtString}</p> 
+                <p className="item-tags-item">Category: {tags}</p>
             </div>
             <button className='get-btn' onClick={handleBorrow}>Borrow</button>
             {user && user.data.role == "admin" && (

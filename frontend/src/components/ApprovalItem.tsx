@@ -82,18 +82,16 @@ const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
     const imageSrc = `/src/assets/images/${media}`
 
     return (
-        <div className="item-container">
-            <div className="image-container">
-                <div className="scrollable-images">
-                    <img src={imageSrc} alt="" />
-                </div>
+        <div className="item-container-approval">
+            <div className="image-container-approval">
+                <img src={imageSrc} alt="" />
             </div>
-            <div className="item-info">
+            <div className="item-info-approval">
                 <h3>{title}</h3>
-                <p className="item-details">{details}</p>
-                <p className="item-creator">{creator}</p>
-                <p className="item-createdAt">{createdAtString}</p>
-                <p className="item-tags">{tags}</p>
+                <p className="item-creator-approval">Creator: {creator}</p>
+                <p className="item-details-approval">{details}</p>
+                <p className="item-date-approval">Date: {createdAtString}</p>
+                <p className="item-tags-approval">Category: {tags}</p>
             </div>
             <div className="ar-btn-container">
                 <button className='approve-btn' onClick={handleApprove}>Approve</button>

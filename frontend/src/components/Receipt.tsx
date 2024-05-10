@@ -16,11 +16,13 @@ interface ItemProps {
 const Receipt: React.FC<ItemProps> = ({ itemID, title, details, media, borrowerName, borrowerEmail, creator, creatorEmail, createdAt, tags }) => {
     const createdAtString = createdAt ? new Date(createdAt).toLocaleDateString() : '';
 
+    const imageSrc = `/src/assets/images/${media}`
+
     return (
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
-                    {/* PUT IMAGE/S HERE */}
+                    <img src={imageSrc} alt="" />
                 </div>
             </div>
             <div className="item-info">

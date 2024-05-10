@@ -52,7 +52,6 @@ const AccountSettings = () => {
                 if (response.ok) {
                     const userData = await response.json();
                     setDisplayUserName(userData.name);
-                    setUserName(userData.name)
                     setDisplayEmail(userData.email);
                 } else {
                     console.error("Error fetching user data:", response.statusText);
