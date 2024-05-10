@@ -2,32 +2,47 @@ import { useState, useEffect } from 'react';
 import './styles/Share.css'
 import { useCreate } from '../hooks/useCreateList';
 import { useFileUpload } from "../hooks/useFileUpload";
+import PopUp from '../components/PopUp';
 
 
 const Share = () => {
     const [category, setCategory] = useState('Appliances')
     const [name, setName] = useState('')
     const [details, setDetails] = useState('')
-    const [media, setMedia] = useState<any>('TEST')
+    const [media, setMedia] = useState<any>('')
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
-    const { createList, isLoading } = useCreate()
+    const { createList } = useCreate()
     const { uploadFile} = useFileUpload()
 
-
+    const [showPopup, setShowPopup] = useState(false)
+    const [eventMessage, setEventMessage] = useState("")
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        
 
-        if(selectedFile)
-            {
-                console.log(selectedFile)
-                await uploadFile(selectedFile)
-            }
+        try {
+            if(selectedFile)
+                {
+                    console.log(selectedFile)
+                    await uploadFile(selectedFile)
+                }
+    
+            await createList(category, name, details, media)
 
-        
-        await createList(category, name, details, media)
+            setShowPopup(true)
+            setEventMessage(`Successfully shared ${name}. Wait for approval.`)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
+
+        } catch (error) {
+            setEventMessage(`Failed to share ${name}`)
+            setShowPopup(true)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
+        }
     }
 
     return (
@@ -79,6 +94,9 @@ const Share = () => {
                 </form>
             </div>
             <div className="popup">Item Listed</div>
+            {showPopup && (
+                <PopUp message={eventMessage} />
+            )}
         </div>
     )
 }

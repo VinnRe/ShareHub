@@ -5,6 +5,7 @@ import { useLogout } from "../hooks/useLogout";
 import { MdAccountCircle } from "react-icons/md";
 import { useAccountUpdate } from "../hooks/useAccountUpdate";
 import ReceiptForm from "../components/ReceiptForm";
+import PopUp from "../components/PopUp";
 
 const AccountSettings = () => {
     const [userName, setUserName] = useState('')
@@ -19,6 +20,8 @@ const AccountSettings = () => {
     const [passwordChange, setPasswordChange] = useState('CHANGE')
     const { updateAccount } = useAccountUpdate()
     const [showForm, setShowForm] = useState(false);
+    const [showPopup, setShowPopup] = useState(false)
+    const [eventMessage, setEventMessage] = useState("")
 
     const { logout } = useLogout()
 
@@ -85,7 +88,17 @@ const AccountSettings = () => {
                 if (dataToUpdate.email) {
                     setDisplayEmail(dataToUpdate.email);
                 }
+                setShowPopup(true)
+                setEventMessage(`Successfully Updated Account`)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
             } else {
+                setShowPopup(true)
+                setEventMessage(`Passwords don't match!`)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
                 console.log("Passwords don't match!");
             }
             setEmail('')
@@ -93,6 +106,11 @@ const AccountSettings = () => {
             setPassword('')
             setConfirmPassword('')
         } catch (error) {
+            setShowPopup(true)
+            setEventMessage(`Error Updating Account`)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
             console.error("Error updating account:", error);
         }
     }
@@ -175,6 +193,9 @@ const AccountSettings = () => {
                 <button className="as-save-btn" onClick={handleSubmit}>Save Changes</button>
             </div>
             {showForm && <div className="overlay" onClick={toggleForm}></div>}
+            {showPopup && (
+                <PopUp message={eventMessage} />
+            )}
         </section>
     )
 }

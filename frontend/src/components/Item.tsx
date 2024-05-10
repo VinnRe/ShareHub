@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles/Item.css'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useRequest } from '../hooks/useRequest';
-import { useState, useEffect } from 'react';
+import PopUp from './PopUp';
 
 interface ItemProps {
     itemID: string
@@ -20,6 +20,8 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
     const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
     const { user } = useAuthContext()
     const { requestItem } = useRequest()
+    const [showPopup, setShowPopup] = useState(false)
+    const [eventMessage, setEventMessage] = useState("")
 
     const handleDelete = async () => {
         try {
@@ -44,18 +46,44 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
             if (response.ok) {
                 // Add Success popup
                 console.log("Successfully deleted item: ", response)
+                setShowPopup(true)
+                setEventMessage(`Deleted ${title}`)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
             } else {
-                // add ERROR
+                setEventMessage(`Failed to delete ${title}`)
+                setShowPopup(true)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
                 console.error("Failed to delete item: ", response)
             }
         } catch (error) {
-            
+            setEventMessage(`Failed to delete ${title}`)
+            setShowPopup(true)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
             console.error("Failed to delete item: ", error)
         }
     }
 
     const handleBorrow = async () => {
-        await requestItem( itemID, createdAt )
+        try {
+            await requestItem( itemID, createdAt )
+            setShowPopup(true)
+            setEventMessage(`Borrowed ${title}`)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
+        } catch (error) {
+            setEventMessage(`Failed to borrow ${title}`)
+            setShowPopup(true)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
+        }
     }
 
     const imageSrc = `/src/assets/images/${media}`
@@ -75,6 +103,10 @@ const Item: React.FC<ItemProps> = ({ itemID, title, details, media, creator, cre
             <button className='get-btn' onClick={handleBorrow}>Borrow</button>
             {user && user.data.role == "admin" && (
                 <button className="remove-btn" onClick={handleDelete}>Remove</button>
+            )}
+
+            {showPopup && (
+                <PopUp message={eventMessage} />
             )}
         </div>
     )

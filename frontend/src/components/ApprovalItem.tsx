@@ -1,4 +1,6 @@
 import './styles/ApprovalItem.css'
+import { useState } from 'react';
+import PopUp from './PopUp';
 
 interface ItemProps {
     itemID: string;
@@ -12,6 +14,8 @@ interface ItemProps {
 
 const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, creator, createdAt, tags }) => {
     const createdAtString = createdAt ? createdAt.toLocaleDateString() : '';
+    const [showPopup, setShowPopup] = useState(false)
+    const [eventMessage, setEventMessage] = useState("")
 
     const handleApprove = async () => {
         try {
@@ -34,14 +38,26 @@ const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
             })
     
             if (response.ok) {
-                // Add Success popup
+                setShowPopup(true)
+                setEventMessage(`Successfully approved item ${title}`)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
                 console.log("Successfully approved item: ", response)
             } else {
-                // add ERROR
+                setEventMessage(`Failed to approve ${title}`)
+                setShowPopup(true)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
                 console.error("Failed to approve item: ", response)
             }
         } catch (error) {
-
+            setEventMessage(`Failed to approve ${title}`)
+            setShowPopup(true)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
             console.error("Failed to approve item: ", error)
         }
     }
@@ -67,15 +83,27 @@ const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
             })
     
             if (response.ok) {
-                // Add Success popup
-                console.log("Successfully approved item: ", response)
+                setEventMessage(`Successfully rejected ${title}`)
+                setShowPopup(true)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
+                console.log("Successfully reject item: ", response)
             } else {
-                // add ERROR
-                console.error("Failed to approve item: ", response)
+                setEventMessage(`Failed to reject ${title}`)
+                setShowPopup(true)
+                setTimeout(() => {
+                    setShowPopup(false)
+                }, 5000)
+                console.error("Failed to reject item: ", response)
             }
         } catch (error) {
-            
-            console.error("Failed to approve item: ", error)
+            setEventMessage(`Failed to reject ${title}`)
+            setShowPopup(true)
+            setTimeout(() => {
+                setShowPopup(false)
+            }, 5000)
+            console.error("Failed to reject item: ", error)
         }
     }
 
@@ -97,6 +125,9 @@ const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
                 <button className='approve-btn' onClick={handleApprove}>Approve</button>
                 <button className='reject-btn' onClick={handleReject}>Reject</button>
             </div>
+            {showPopup && (
+                <PopUp message={eventMessage} />
+            )}
         </div>
     )
 }
