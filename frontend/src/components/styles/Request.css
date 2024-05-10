@@ -1,0 +1,85 @@
+.item-container-req {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: var(--brown-color) solid;
+    position: relative;
+    width: 300px;
+    height: 400px;
+    box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.4);
+    overflow-y: scroll;
+}
+
+.item-container-req button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0.7rem;
+    background-color: var(--orange-color);
+    font-size: 1.3rem;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.image-container-req {
+    margin-top: 10vh;
+    max-width: 100%;
+    height: 20vh;
+}
+
+.image-container-req img {
+    width: 100%;
+    max-width: 100%;
+    height: 150px;
+}
+
+.item-info-req {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 35vh;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 3vh;
+}
+
+.item-info-req h3 {
+    font-family: "Extrabld";
+    font-size: 1.5rem;
+}
+
+.item-info-req .item-creator-req {
+    font-family: "Bold";
+    margin-bottom: 2vh;
+}
+
+.item-info-req .item-details-req {
+    width: 100%;
+    max-height: 9em;
+    overflow-y: auto;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+.item-info-req .item-date-req {
+    margin-bottom: 1vh;
+}
+
+.ar-btn-container-req .approve-btn-req {
+    background-color: var(--green-color);
+}
+
+.ar-btn-container-req .reject-btn-req {
+    background-color: var(--purple-color);
+}
+
+.ar-btn-container-req .approve-btn-req:hover {
+    background-color: var(--dark-green-color);
+}
+
+.ar-btn-container-req .reject-btn-req:hover {
+    background-color: var(--dark-purple-color);
+}

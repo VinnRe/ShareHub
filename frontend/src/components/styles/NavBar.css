@@ -1,0 +1,75 @@
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "Refular";
+    font-size: 0.85rem;
+    font-weight: bold;
+    height: 10vh;
+    width: 100vw;
+    background-color: var(--light-blue-color);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-user {
+    margin-right: 15px;
+}
+
+.button-user {
+    margin-right: 30px;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+}
+
+.left-nav-container {
+    display: flex;
+    align-items: center;
+    margin-left: 35px;
+}
+
+.left-nav-container img {
+    width: 100px;
+    margin-right: 30px;
+}
+
+.left-nav-container a {
+    text-decoration: none;
+    padding: 25px;
+}
+
+.right-nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.right-nav-container a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-right: 35px;
+    padding: 10px 20px;
+    box-shadow: -3px 3px 3px 0px rgba(0, 0, 0, 0.50);
+}
+
+.right-nav-container .register-btn {
+    color: var(--purple-color);
+    background-color: white;
+    margin-right: 10px;
+}
+
+.right-nav-container .login-btn {
+    color: white;
+    background-color: var(--purple-color);
+}
+
+.right-nav-container button:hover {
+    color: white;
+    background-color: var(--orange-color);
+}
