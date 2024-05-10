@@ -79,11 +79,13 @@ const ApprovalItem: React.FC<ItemProps> = ({ itemID, title, details, media, crea
         }
     }
 
+    const imageSrc = `/src/assets/images/${media}`
+
     return (
         <div className="item-container">
             <div className="image-container">
                 <div className="scrollable-images">
-                    {/* PUT IMAGE/S HERE */}
+                    <img src={imageSrc} alt="" />
                 </div>
             </div>
             <div className="item-info">
