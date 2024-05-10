@@ -47,33 +47,38 @@ const Signup = () => {
             type="text"
             onChange={(e) => setFirstName(e.target.value)}
             value={firstName}
+            required
           />
           <input
             placeholder="LAST NAME"
             type="text"
             onChange={(e) => setLastName(e.target.value)}
             value={lastName}
+            required
           />
           <input
             placeholder="EMAIL"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            required
           />
           <input
             placeholder="PASSWORD"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            required
           />
           <input
             placeholder="CONFIRM PASSWORD"
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
             value={confirmPassword}
+            required
           />
           <div className="form-actions--s">
-            <button disabled={isLoading}>Signup</button>
+            <button>Signup</button>
             {error && <div className="error">{error}</div>}
           </div>
         </form>

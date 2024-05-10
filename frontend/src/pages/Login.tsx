@@ -36,16 +36,18 @@ const Login = () => {
             type="text"
             onChange={(e) => setEmailOrUsername(e.target.value)}
             value={emailOrUsername}
+            required
           />
           <input
             placeholder="PASSWORD"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            required
           />
 
           <div className="form-actions">
-            <button className="login-btn" disabled={isLoading}>
+            <button className="login-btn">
               Login
             </button>
             {error && <div className="error">{error}</div>}
