@@ -1,6 +1,6 @@
-# ShareHub
+# ShareHub: A Community Driven Platform
 
-A simple Online Marketplace using Vanilla JS and NodeJS for server
+A website for sharing items and services to minimize our environmental footprint.
 
 ## Features
 - Login and Register System
